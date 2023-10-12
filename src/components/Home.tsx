@@ -2,7 +2,10 @@
 import { Button } from '@/components/Button';
 import {useRouter} from 'next/navigation';
 import {signIn, useSession, signOut} from 'next-auth/react';
-import { Session, getServerSession } from "next-auth";
+import { AuthOptions, Session, getServerSession } from "next-auth";
+import { authOptions } from '@/lib/auth';
+import { IncomingMessage, ServerResponse } from 'http';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 
 export default function Home(){
@@ -66,3 +69,5 @@ export default function Home(){
           
         </main>)
 }
+
+

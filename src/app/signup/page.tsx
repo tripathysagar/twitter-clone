@@ -1,6 +1,7 @@
 "use client"
 
 import axios from "axios";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 
 
@@ -94,6 +95,12 @@ export default  function Signup() {
                                     avatar: logo
                                 })
                                 console.log(resp);
+
+
+                                if(resp.status === 200){
+                                    redirect('/')
+                                }
+                                
 
                             }}
                             type="button" 
