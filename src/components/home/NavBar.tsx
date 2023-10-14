@@ -29,7 +29,7 @@ export default function NavBar({avatar}:{avatar:number}){
         <nav className='bg-red-800'>
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <Link href="/home" className="flex items-center rounded-sm">
-                    <Image src="/logo.png" width={40} height={20} alt="X Logo" className='rounded-sm' />
+                    <Image src="/logo.png" width={40} height={20} alt="X Logo" className='rounded-sm pb-2' />
                 </Link>
 
                 <div className='flex flex-row gap-2'>
