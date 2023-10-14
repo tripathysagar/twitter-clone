@@ -1,5 +1,8 @@
 "use client"
 
+import { Button } from "@/components/Button";
+import { extractError } from "@/lib/extractError";
+import { signInBody } from "@/lib/zodTypes";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -14,6 +17,47 @@ export function Form(){
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
   
+    async function signInFunc (){
+
+        const body = {
+            email: email,
+            password: password
+        };
+        const  validBody = signInBody.safeParse(body);
+        if(!validBody.success){
+            const { errors } = validBody.error;
+
+            console.log(errors);
+
+            const errMessage = extractError(errors);
+            
+            
+            alert(errMessage);  
+            return;
+        }
+
+        try{
+            const resp = await axios.post('/api/login',body)
+            //console.log(resp);
+        
+            if(resp.status === 200){
+                router.push("/home");
+            }else {
+                throw new Error(resp.data.message);
+            }
+        }catch(error:any){
+            if (error.response) {
+                console.log('Error status:', error.response.status);
+                console.log('Error response data:\n', error.response.data.message);
+                alert(error.response.data.message);
+              } else {
+                console.error('Request failed:', error.message);
+              }
+        }
+        
+        
+
+    }
       
   
       return (
@@ -42,30 +86,8 @@ export function Form(){
                       </div>
                       
   
-                      
-                      
-  
                       <div className="flex tems-center justify-center">
-                          <button
-                              onClick={async(e) => {
-                                  console.log(email,password);
-                                  
-                                  const resp = await axios.post('/api/login',{
-                                      email: email,
-                                      password: password,
-                                  })
-                                  console.log(resp);
-                                  
-                                  if(resp.status === 200){
-                                    router.push("/");
-                                    }
-  
-                              }}
-                              type="button" 
-                              className=" text-white bg-[#1da1f2] focus:outline-none   font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2  ">
-                              Log in
-              
-                          </button>
+                          <Button label={"Log in"} width={80} navFunc={signInFunc} />
                       </div>
                   </div>
               </div>

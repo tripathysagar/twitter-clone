@@ -1,12 +1,16 @@
 "use client"
 
+import { Button } from "@/components/Button";
+import { extractError } from "@/lib/extractError";
+import { signUpBody } from "@/lib/zodTypes";
 import axios from "axios";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 
 export default  function Signup() {
 
+    const router = useRouter();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -37,6 +41,41 @@ export default  function Signup() {
         )
     }
 
+    async function signUpFunc() {
+        const body = {
+            email: email,
+            password: password,
+            name: name,
+            avatar: logo
+          };
+        const  validBody = signUpBody.safeParse(body);
+        if(!validBody.success){
+            const { errors } = validBody.error;
+            const errMessage = extractError(errors);
+
+            alert(errMessage)
+            return;
+        }
+        try {
+          
+          const resp = await axios.post('/api/signup', body);
+      
+          if (resp.status === 200) {
+            router.push('home');
+          } else {
+            throw new Error(resp.data.message);
+          }
+        } catch (error:any) {
+          if (error.response) {
+            console.log('Error status:', error.response.status);
+            console.log('Error response data:\n', error.response.data.message);
+            alert(error.response.data.message);
+          } else {
+            console.error('Request failed:', error.message);
+          }
+        }
+      }
+      
     return (
         <div className="flex items-center justify-center h-screen">
             <div className=" text-white  rounded-lg border shadow-lg p-5 box-content h-1/2 w-full md:w-1/2 lg:w-1/3 ">
@@ -84,30 +123,8 @@ export default  function Signup() {
                     </div>
 
                     <div className="flex tems-center justify-center">
-                        <button
-                            onClick={async(e) => {
-                                console.log(email,password,name,logo);
-                                
-                                const resp = await axios.post('/api/signup',{
-                                    email: email,
-                                    password: password,
-                                    name: name,
-                                    avatar: logo
-                                })
-                                console.log(resp);
-
-
-                                if(resp.status === 200){
-                                    redirect('/')
-                                }
-                                
-
-                            }}
-                            type="button" 
-                            className=" text-white bg-[#1da1f2] focus:outline-none   font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2  ">
-                            Sign Up
-            
-                        </button>
+                        <Button label={"Sign Up"} width={80} navFunc={signUpFunc} />
+                        
                     </div>
                 </div>
             </div>

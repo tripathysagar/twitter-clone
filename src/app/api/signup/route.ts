@@ -2,15 +2,27 @@ import { prisma } from "@/lib/prismaInit";
 import { NextResponse } from "next/server";
 import { encodePassword } from '@/lib/encodePassword';
 import { generateJWT } from "@/lib/JWT";
+import { signUpBody } from '@/lib/zodTypes';
+import { extractError } from '@/lib/extractError';
 
 export async function POST(req: Request) {
   let status: number = 200;
   try {
-    const body = await req.json(); //fetch the body of the req
+    const jsonBody = await req.json(); //fetch the body of the req
     
+    const  body = signUpBody.safeParse(jsonBody);
 
+    if(!body.success){
+      status = 400;
+      const { errors } = body.error;
+      console.log(errors);
+      const errMessage = extractError(errors);
+      console.log(errMessage);
+      throw new Error(errMessage);
+
+    }
     //de-struct the data
-    const { name, email, password, avatar} = body as {
+    const { name, email, password, avatar} = body.data as {
       name: string;
       email: string;
       password: string;
@@ -33,7 +45,7 @@ export async function POST(req: Request) {
 
     }
     
-    console.log(name, email, password, avatar, body.avatar)
+    console.log(name, email, password, avatar)
 
     // encode password or raise error
     const passwordEncrypted = (encodePassword(password));
@@ -85,3 +97,5 @@ export async function POST(req: Request) {
     );
   }
 }
+
+

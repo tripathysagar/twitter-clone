@@ -18,13 +18,31 @@ export  function generateJWT(id: Number){
 }
 
 
-export  function extractJWT(token:string):Number{
+export  function extractJWT(token:string):number{
     
+
     if(typeof SECRET === 'string' && SECRET !== undefined) {
-        let data =  jwt.verify(token, SECRET)
-        console.log(data)
-        return Number(data.id)
+        try{
+            let data:any;
+            let err:any;
+
+            data =  jwt.verify(token, SECRET);
+            if(err){
+                throw new Error("invalid JWT");
+            }
+            console.log(data);
+            if (!isNaN(data.id)) {
+                return Number(data.id);
+            } else {
+                throw new Error("ID is not a valid number");
+            }
+        }catch(error: any){
+            console.log(error.message)
+            return -1
+        }
+        
     }
+    return -1;
     
     
     //return -1;
