@@ -1,7 +1,7 @@
 "use client"
 
 import Image from 'next/image';
-import {type SignUpBody} from '../../lib/zodTypes';
+import {type signInBodyType} from '../../lib/zodTypes';
 import Link from 'next/link';
 import { Button } from '../Button';
 import { useRouter } from 'next/navigation';
@@ -26,7 +26,7 @@ export default function NavBar({avatar}:{avatar:number}){
     }
 
     return(
-        <nav className='bg-red-800'>
+        <nav className='bg-red-800 '>
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <Link href="/home" className="flex items-center rounded-sm">
                     <Image src="/logo.png" width={40} height={20} alt="X Logo" className='rounded-sm pb-2' />

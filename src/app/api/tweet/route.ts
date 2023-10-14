@@ -61,3 +61,61 @@ export async function POST(req: Request) {
         );
     }
 }
+
+export async function GET(req: Request) {
+    let status: number = 500;
+    const cookieStore = cookies()
+
+    try{
+        // jsonBody = await req.json(); //fetch the body of the req
+        const cookie = cookieStore.get('t-cookie');
+
+        if(cookie === undefined){
+            status = 401;
+            throw new Error("unauthorized");
+        }
+
+        const userExists = await getUserFromJWT(cookie.value)
+
+        if(userExists === -1 || userExists === null){
+            status = 401;
+            throw new Error("unauthorized");
+        }
+
+        const offset = Number(req.headers.get('offset'));
+        console.log(offset * 5);
+        
+        const tweets = await prisma.tweet.findMany({
+            orderBy:{
+                  createdAt: 'desc',
+                },
+            skip: offset * 5,
+            take: 5, 
+            include : {
+                author: {
+                    select: {
+                        name: true,
+                        avatar: true
+                    }
+                }
+            }
+            
+        })
+
+        //console.log(tweets);
+        return NextResponse.json(tweets,
+          { status: 200 }
+        );
+
+    }catch(error:any){
+        console.log(error.message);
+        return NextResponse.json({
+            status: "error",
+            message: error.message,
+          },
+          { status: status }
+        );
+    }
+
+    
+}

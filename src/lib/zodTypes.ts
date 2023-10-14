@@ -7,7 +7,7 @@ export const signUpBody = z.object({
     avatar: z.number().min(1).max(12),
 });
 
-export type SignUpBody = z.infer<typeof signUpBody>;
+export type signUpBodyType = z.infer<typeof signUpBody>;
 
 
 export const signInBody = z.object({
@@ -15,7 +15,7 @@ export const signInBody = z.object({
     password: z.string().min(6),
 });
 
-export type SignInBody = z.infer<typeof signInBody>;
+export type signInBodyType = z.infer<typeof signInBody>;
 
 
 export const userDetails = z.object({
@@ -23,4 +23,14 @@ export const userDetails = z.object({
     name:   z.string().min(2),
     avatar: z.number().min(1).max(12),
 })
-export type UserDetails = z.infer<typeof userDetails>;
+export type userDetailsType = z.infer<typeof userDetails>;
+
+
+export const tweet = z.object({
+    autherId: z.number(),
+    content: z.string().max(129),
+    createdAt: z.date(),
+})
+
+export type tweetType = z.infer<typeof tweet>;
+
