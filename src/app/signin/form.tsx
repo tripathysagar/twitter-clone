@@ -62,7 +62,7 @@ export function Form(){
   
       return (
           <div className="flex items-center justify-center h-screen">
-              <div className=" text-white  rounded-lg border shadow-lg p-5 box-content h-1/2 w-full md:w-1/2 lg:w-1/3 ">
+              <div className=" text-white  rounded-lg border shadow-lg p-5 box-content h-1/3 w-full md:w-1/2 lg:w-1/3 m-2 ">
                   <div >
                       <div className="">
                           <label htmlFor="Email Address" className="block mb-2  text-gray-900 dark:text-white">First name</label>
@@ -74,7 +74,7 @@ export function Form(){
                           required
                           onChange={(e) => {setEmail(e.target.value)}} />
                       </div>
-                      <div>
+                      <div className="mb-5">
                           <label htmlFor="Password" className="block mb-2  text-gray-900 dark:text-white">Password</label>
                           <input 
                           type="password" 

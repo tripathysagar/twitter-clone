@@ -56,11 +56,14 @@ export default  function Signup() {
             alert(errMessage)
             return;
         }
+
+        console.log(body)
         try {
           
           const resp = await axios.post('/api/signup', body);
       
           if (resp.status === 200) {
+            console.log(resp);
             router.push('home');
           } else {
             throw new Error(resp.data.message);
@@ -78,7 +81,7 @@ export default  function Signup() {
       
     return (
         <div className="flex items-center justify-center h-screen">
-            <div className=" text-white  rounded-lg border shadow-lg p-5 box-content h-1/2 w-full md:w-1/2 lg:w-1/3 ">
+            <div className=" text-white  rounded-lg border shadow-lg p-5 box-content h-2/3 m-2  w-full md:w-1/2 lg:w-1/3 ">
                 <div >
                     <div className="">
                         <label htmlFor="Email Address" className="block mb-2  text-gray-900 dark:text-white">First name</label>
@@ -122,10 +125,11 @@ export default  function Signup() {
                         />
                     </div>
 
-                    <div className="flex tems-center justify-center">
+                    
+                </div>
+                <div className="flex tems-center justify-center">
                         <Button label={"Sign Up"} width={80} navFunc={signUpFunc} />
                         
-                    </div>
                 </div>
             </div>
         </div>

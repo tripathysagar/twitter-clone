@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import {type SignUpBody} from '../../lib/zodTypes';
 import Link from 'next/link';
-import { Button } from '../../components/Button';
+import { Button } from '../Button';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 

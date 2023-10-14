@@ -1,8 +1,11 @@
-import { extractJWT } from "@/lib/JWT";
-import { prisma } from "@/lib/prismaInit";
+
 import { cookies } from "next/headers";
 
-import BasePage from "./BasePage";
+
+import { extractJWT } from "@/lib/JWT";
+import { prisma } from "@/lib/prismaInit";
+import { UserDetails, userDetails } from '@/lib/zodTypes';
+import BasePage from "../../components/home/BasePage";
 
 
 
@@ -33,11 +36,18 @@ export default async function HomePage(){
             // TODO remove cookie
           }else{
             // TODO : genrate new jwt with updated timeperiod and, set that value
-            return (
-              <BasePage user={userExists}/>
-            );
+            
+            const user = userDetails.safeParse(userExists);
+            if(user.success){
+              
+              return (
+                <BasePage user={user.data}/>
+              );
+            }
+            
           }
         }}
+
         return <div>
             oops
         </div>
