@@ -1,8 +1,6 @@
 "use client"
 import { Button } from '@/components/Button';
 import {useRouter} from 'next/navigation';
-import { IncomingMessage, ServerResponse } from 'http';
-import { NextApiRequest, NextApiResponse } from 'next';
 
 
 export default function BasePage(){

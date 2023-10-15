@@ -39,6 +39,7 @@ export const tweet = z.object({
     createdAt: z.date(), 
     avatar: z.number().min(1).max(12),
     likesCount: z.number(),
+    commentsCount: z.number(),
     authorName: z.string(),
     authorEmail: z.string().email(),
     userLiked: z.boolean()

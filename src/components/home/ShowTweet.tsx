@@ -49,7 +49,7 @@ export default function ShowTweet(){
             { fetched && (
                             <li >
                             {tweets.map(tweet => 
-                                <TweetCard tweetInput={tweet} />
+                                <TweetCard tweetInput={tweet} clickable={true} />
                                 
                             )}
                             </li>

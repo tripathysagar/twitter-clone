@@ -2,9 +2,7 @@
 import { cookies } from "next/headers";
 
 
-import { extractJWT } from "@/lib/JWT";
-import { prisma } from "@/lib/prismaInit";
-import { UserDetails, userDetails } from '@/lib/zodTypes';
+import {  userDetails } from '@/lib/zodTypes';
 import BasePage from "../../components/home/BasePage";
 import { getUserFromJWT } from "@/lib/getUserFromJWT";
 

@@ -1,16 +1,22 @@
 "use client"
 
-import { tweetType } from "@/lib/zodTypes";
 import axios from "axios";
 import { useState } from "react";
+import { useRouter } from 'next/navigation';
+import { useSetRecoilState } from 'recoil';
+
+import { tweetType } from "@/lib/zodTypes";
+import { AddTweetAtom } from '@/recoil/atoms/tweetAtom';
 
 
-export default function TweetCard({tweetInput}:{tweetInput:tweetType}){
+export default function TweetCard({tweetInput, clickable}:{tweetInput:tweetType, clickable:boolean}){
     const [tweet, setTweet] = useState(tweetInput);
 
+    const setTweetToAddComment = useSetRecoilState(AddTweetAtom);
 
-    
-    const avatarSrc = `avatars/${tweet.avatar}.svg`
+    const avatarSrc = `avatars/${tweet.avatar}.svg`;
+
+    const router = useRouter();
 
 
     async function likeTweet(likeButton:boolean, tweetId: Number ){
@@ -25,6 +31,12 @@ export default function TweetCard({tweetInput}:{tweetInput:tweetType}){
         }
     }
 
+    async function tweetClicked() {
+        const cardClicked = `/tweet/${tweet.id}`;
+        console.log(cardClicked);
+        setTweetToAddComment(tweet);
+        router.push(cardClicked);
+    }
     return (
         <div className=" pt-2 flex  bg-gray-50 bg-red-800 font-sans " key={tweet.id.toString()}>
             <div className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-800  rounded border w-full">
@@ -39,8 +51,15 @@ export default function TweetCard({tweetInput}:{tweetInput:tweetType}){
                     </div>
                 </div>
 
-                <p className="text-black dark:text-white block  leading-snug mt-3 ml-2">{tweet.tweet}</p>
-                <p className="text-gray-500 dark:text-gray-400  py-1 my-0.5 ml-2 font-sans">{formatTweetDate(tweet.createdAt.toString())}</p>
+                <span onClick={(e) =>{
+                    if(clickable)
+                        tweetClicked()
+                }}>
+                    <p className="text-black dark:text-white block  leading-snug mt-3 ml-2">{tweet.tweet}</p>
+                    <p className="text-gray-500 dark:text-gray-400  py-1 my-0.5 ml-2 font-sans">{formatTweetDate(tweet.createdAt.toString())}</p>
+                    
+
+                </span>
                 
                 <div className="border-gray-200 dark:border-gray-600 border border-b-0 my-1 pl-2">
                     <div className="text-gray-500 dark:text-gray-400 flex ">
@@ -79,9 +98,14 @@ export default function TweetCard({tweetInput}:{tweetInput:tweetType}){
                             
                             <span className="ml-1">{tweet.likesCount.toString()}</span>
                         </div>
-                    <div className="flex items-center mr-6">
+                    <div 
+                    className="flex items-center mr-6"
+                    onClick={(e) =>{
+                        tweetClicked()
+                    }}
+                    >
                         <svg className="fill-current h-5 w-auto r-1re7ezh r-4qtqp9 r-yyyyoo r-1xvli5t r-dnmrzs r-bnwqim r-1plcrui r-lrvibr" viewBox="0 0 24 24" ><g><path d="M14.046 2.242l-4.148-.01h-.002c-4.374 0-7.8 3.427-7.8 7.802 0 4.098 3.186 7.206 7.465 7.37v3.828c0 .108.044.286.12.403.142.225.384.347.632.347.138 0 .277-.038.402-.118.264-.168 6.473-4.14 8.088-5.506 1.902-1.61 3.04-3.97 3.043-6.312v-.017c-.006-4.367-3.43-7.787-7.8-7.788zm3.787 12.972c-1.134.96-4.862 3.405-6.772 4.643V16.67c0-.414-.335-.75-.75-.75h-.396c-3.66 0-6.318-2.476-6.318-5.886 0-3.534 2.768-6.302 6.3-6.302l4.147.01h.002c3.532 0 6.3 2.766 6.302 6.296-.003 1.91-.942 3.844-2.514 5.176z"></path></g></svg>
-                        <span className="ml-1">93</span>
+                        <span className="ml-1">{tweet.commentsCount.toString()}</span>
                     </div>
                 </div>
             </div>

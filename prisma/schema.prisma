@@ -29,6 +29,7 @@ model Tweet {
   author User  @relation(fields: [authorId], references: [id])
   authorId Int
   likesCount Int @default(0)
+  commentsCount Int @default(0)
   comments Comments[]
   likes Likes[]
 }
