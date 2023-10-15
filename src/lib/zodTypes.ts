@@ -27,9 +27,12 @@ export type userDetailsType = z.infer<typeof userDetails>;
 
 
 export const tweet = z.object({
-    autherId: z.number(),
-    content: z.string().max(129),
-    createdAt: z.date(),
+    id: z.number(),
+    tweet: z.string().max(129),
+    createdAt: z.date(), 
+    avatar: z.number().min(1).max(12),
+    authorName: z.string(),
+    authorEmail: z.string().email(),
 })
 
 export type tweetType = z.infer<typeof tweet>;

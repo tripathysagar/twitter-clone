@@ -2,92 +2,59 @@
 import { useEffect, useState } from "react";
 import { useRecoilState } from 'recoil';
 
-import { TweetAtom } from '@/recoil/atoms/tweetAtoms';
+import { TweetsAtom } from '@/recoil/atoms/tweetAtoms';
 import axios from "axios";
+import { tweet, tweetType } from "@/lib/zodTypes";
+import TweetCard from "./TweetCard";
 
 export default function ShowTweet(){
 
-    const [tweets, setTweets] = useRecoilState(TweetAtom);
+    const [tweets, setTweets] = useRecoilState(TweetsAtom);
+    const [fetched, setFetched] = useState(false);
 
     async function fetchTweets(){
         try {
             const resp = await axios.get('/api/tweet', {
                 headers: {
-                    offset: 2
+                    offset: tweets.length
                 }
             });
+
+            const newTweets = await resp.data;
             // Assuming the response contains an array of tweets
-            setTweets(resp.data);
+            setTweets((tweets)=>[
+                ...tweets,
+                ...newTweets
+            ]);
+
+            console.log(tweets);
           } catch (error) {
             console.error('Error fetching tweets:', error);
           }
     }
+
     useEffect(()=>{
-        fetchTweets()
+        fetchTweets();
+        setFetched(true);
+
+
     },[])
 
+    useEffect(() => {
+        console.log('Updated tweets:', tweets);
+      }, [tweets]);
     
     return(
         <ul className="w-full sm:w-10/12 md:w-1/2 gap-2 ">
-  <li>List Item 1</li>
-  <li>List Item 2</li>
-  <li>List Item 3</li>
-  <li>List Item 1</li>
-  <li>List Item 2</li>
-  <li>List Item 3</li>
-  <li>List Item 1</li>
-  <li>List Item 2</li>
-  <li>List Item 3</li>
-  <li>List Item 1</li>
-  <li>List Item 2</li>
-  <li>List Item 3</li>
-  <li>List Item 1</li>
-  <li>List Item 2</li>
-  <li>List Item 3</li>
-  <li>List Item 1</li>
-  <li>List Item 2</li>
-  <li>List Item 3</li>
-  <li>List Item 1</li>
-  <li>List Item 2</li>
-  <li>List Item 3</li>
-  <li>List Item 1</li>
-  <li>List Item 2</li>
-  <li>List Item 3</li>
-  <li>List Item 1</li>
-  <li>List Item 2</li>
-  <li>List Item 3</li>
-  <li>List Item 1</li>
-  <li>List Item 2</li>
-  <li>List Item 3</li>
-  <li>List Item 1</li>
-  <li>List Item 2</li>
-  <li>List Item 3</li>
-  <li>List Item 1</li>
-  <li>List Item 2</li>
-  <li>List Item 3</li>
-  <li>List Item 1</li>
-  <li>List Item 2</li>
-  <li>List Item 3</li>
-  <li>List Item 1</li>
-  <li>List Item 2</li>
-  <li>List Item 3</li>
-  <li>List Item 1</li>
-  <li>List Item 2</li>
-  <li>List Item 3</li>
-  <li>List Item 1</li>
-  <li>List Item 2</li>
-  <li>List Item 3</li>
-  <li>List Item 1</li>
-  <li>List Item 2</li>
-  <li>List Item 3</li>
-  <li>List Item 1</li>
-  <li>List Item 2</li>
-  <li>List Item 3</li>
-
-  <li>List Item 1</li>
-  <li>List Item 2</li>
-  <li>List Item 3</li>
-  <li>List Item 100</li>
-</ul>
+            { fetched && (
+                            <li >
+                            {tweets.map(tweet => 
+                                <TweetCard tweetInput={tweet} />
+                                
+                            )}
+                            </li>
+                        )
+            }
+        </ul>
     )
 }

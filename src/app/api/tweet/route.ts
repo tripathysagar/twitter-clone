@@ -95,15 +95,26 @@ export async function GET(req: Request) {
                 author: {
                     select: {
                         name: true,
-                        avatar: true
+                        avatar: true,
+                        email: true
                     }
                 }
             }
             
         })
 
+        const flattenedTweets = tweets.map(tweet => ({
+            id: tweet.id,
+            tweet: tweet.tweet,
+            createdAt: tweet.createdAt,
+            avatar: tweet.author.avatar,
+            authorName: tweet.author.name,
+            authorEmail: tweet.author.email
+            
+        }));
+
         //console.log(tweets);
-        return NextResponse.json(tweets,
+        return NextResponse.json(flattenedTweets,
           { status: 200 }
         );
 
