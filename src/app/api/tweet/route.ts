@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { cookies } from 'next/headers';
 import { prisma } from "@/lib/prismaInit";
 import { getUserFromJWT } from "@/lib/getUserFromJWT";
-import { string } from "zod";
 
 export async function POST(req: Request) {
     let status: number = 500;
@@ -98,22 +97,33 @@ export async function GET(req: Request) {
                         avatar: true,
                         email: true
                     }
+                },
+                likes: {
+                    where: {
+                        authorId: userExists.id, // Fill in the userId to filter likes by a specific user
+                    },
+                    select: {
+                        id: true
+                    }
                 }
             }
             
         })
-
+        console.log("+++++++++++++++++++++")
+        
+        
         const flattenedTweets = tweets.map(tweet => ({
             id: tweet.id,
             tweet: tweet.tweet,
             createdAt: tweet.createdAt,
             avatar: tweet.author.avatar,
             authorName: tweet.author.name,
-            authorEmail: tweet.author.email
-            
+            authorEmail: tweet.author.email,
+            likesCount: tweet.likesCount,
+            userLiked: tweet.likes[0] === undefined ? false : true
         }));
 
-        //console.log(tweets);
+        //console.log(flattenedTweets);
         return NextResponse.json(flattenedTweets,
           { status: 200 }
         );

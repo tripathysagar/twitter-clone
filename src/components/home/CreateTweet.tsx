@@ -41,7 +41,7 @@ export default function CreateTweet(){
             <div className=" w-full sm:w-10/12 md:w-1/2 gap-2 ">
                 <label htmlFor="large-input" 
                 className="block  text-sm font-medium text-white">
-                    <h1>Hello {user?.name}!!!</h1>
+                    <h1>Hello {user?.name} 👋</h1>
                 </label>
 
                 <div className="relative  bg-slate-700  rounded-sm" data-te-input-wrapper-init>
@@ -57,7 +57,7 @@ export default function CreateTweet(){
                         >  
                     </textarea>
                 </div>
-                <div className="flex flex-row justify-end  gap-2">
+                <div className="flex flex-row justify-end  gap-2 pt-2">
                     {tweet.length <= 128 && <h1 className=" pt-2 font-medium font-sans text-cyan-400">
                         {tweet.length}/128
                     </h1>}

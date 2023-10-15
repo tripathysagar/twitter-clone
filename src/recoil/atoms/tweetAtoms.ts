@@ -5,3 +5,4 @@ export const TweetsAtom = atom<tweetType[]>({
     key: 'tweets',
     default: []
 });
+
