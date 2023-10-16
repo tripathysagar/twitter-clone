@@ -1,7 +1,8 @@
 import './globals.css'
-import type { Metadata } from 'next'
-//import { Inter } from 'next/font/google';
+import type { Metadata } from 'next';
 import RecoidContextProvider from "./recoilContextProvider";
+
+//import { Inter } from 'next/font/google';
 
 
 //const inter = Inter({ subsets: ['latin'] })
@@ -23,8 +24,9 @@ export default async function RootLayout({
       <body className="{inter.className} font-serif" >
         <RecoidContextProvider>
           {children}
-
         </RecoidContextProvider>
+
+        
         
       </body>
     </html>

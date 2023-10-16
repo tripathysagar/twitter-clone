@@ -40,7 +40,7 @@ export default function TweetCard({tweetInput, clickable}:{tweetInput:tweetType,
         router.push(cardClicked);
     }
     return (
-        <div className=" pt-2 flex  bg-gray-50 bg-red-800 font-sans " key={tweet.id.toString()}>
+        <div className=" pt-2 flex w-full sm:w-10/12 md:w-1/2 bg-red-800 font-sans " key={tweet.id.toString()}>
             <div className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-800  rounded border w-full">
                 <div className="flex  flex-row ml-2 ">
                     <img className="w-10 h-10 mt-2 rounded-2xl border border-gray-100 dark:border-gray-700 " src={avatarSrc}/>
@@ -50,7 +50,7 @@ export default function TweetCard({tweetInput, clickable}:{tweetInput:tweetType,
                             <span className="text-black dark:text-white font-bold block ">{tweet.authorName}</span>
                             <span className="text-gray-500 dark:text-gray-400 font-normal block">@{tweet.authorEmail}</span>
                         </div>
-                    </div>
+                    </div>  
                 </div>
 
                 <span onClick={(e) =>{

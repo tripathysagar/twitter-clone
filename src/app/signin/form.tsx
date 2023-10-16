@@ -41,7 +41,9 @@ export function Form(){
             //console.log(resp);
         
             if(resp.status === 200){
-                router.push("/home");
+                //router.forward()
+                
+                router.push("/home", { scroll: false });
             }else {
                 throw new Error(resp.data.message);
             }
@@ -54,7 +56,6 @@ export function Form(){
                 console.error('Request failed:', error.message);
               }
         }
-        
         
 
     }

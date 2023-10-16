@@ -1,11 +1,14 @@
+import { notFound } from 'next/navigation'    
 
 import { cookies } from "next/headers";
-import { getUserFromJWT } from "@/lib/getUserFromJWT";
-import { userDetails } from "@/lib/zodTypes";
+import {  userDetails } from '@/lib/zodTypes';
 import BasePage from "@/components/addComment/BasePage";
-import axios from "axios";
-import { prisma } from "@/lib/prismaInit";
-import { NextResponse } from "next/server";
+import { getUserFromJWT } from "@/lib/getUserFromJWT";
+import NavBar from "@/components/addComment/NavBar";
+import { redirect } from "next/navigation";
+import { UserAtom } from '@/recoil/atoms/userAtoms';
+import { prisma } from '@/lib/prismaInit';
+
 //import BasePage from "../../components/addComment/BasePage";
 
 
@@ -61,10 +64,10 @@ export default async function Page({ params }: { params: { tweetId: number } }) 
           }})
 
           if(tweet === null){
-            return <div>
-              404 tweet not found
-            </div>
+            return notFound()
           }
+
+          const user = userDetails.safeParse(userExists);
 
 
           const flattenedTweet = {
@@ -80,14 +83,24 @@ export default async function Page({ params }: { params: { tweetId: number } }) 
         };
 
         console.log(flattenedTweet);
+        if(user.success){
+        console.log(user?.data)
 
-
-          return <div> {params.tweetId}</div>
+        return (
+          <main>
+          <div className="sticky top-0 z-50"> 
+            <NavBar avatar={user.data.avatar} />
+  
+          </div>
+            <BasePage  tweet={flattenedTweet}/>
+          </main>
+        )
+          
           
         }
-    }
+    }}}
 
-  }
+  
 
   return <div>oops</div>
 

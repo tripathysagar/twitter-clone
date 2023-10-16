@@ -1,60 +1,61 @@
 "use client"
 import { useEffect, useState } from "react";
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRouter } from "next/navigation";
 
-import { TweetsAtom } from '@/recoil/atoms/tweetAtoms';
+
+import { TweetsAtom } from '@/recoil/atoms/tweetsAtoms';
 import axios from "axios";
-import { tweet, tweetType } from "@/lib/zodTypes";
+import {  tweetType } from "@/lib/zodTypes";
 import TweetCard from "./TweetCard";
+import React from "react";
+import { sortTweetsList } from "@/recoil/selectors/sortTweetsList";
 
 export default function ShowTweet(){
+    const router = useRouter();
 
-    const [tweets, setTweets] = useRecoilState(TweetsAtom);
-    const [fetched, setFetched] = useState(false);
-
-    async function fetchTweets(){
-        try {
-            const resp = await axios.get('/api/tweet', {
-                headers: {
-                    offset: tweets.length
-                }
-            });
-
-            const newTweets = await resp.data;
-            // Assuming the response contains an array of tweets
-            setTweets((tweets)=>[
-                ...tweets,
-                ...newTweets
-            ]);
-
-            console.log(tweets);
-          } catch (error) {
-            console.error('Error fetching tweets:', error);
-          }
-    }
-
-    useEffect(()=>{
-        fetchTweets();
-        setFetched(true);
+    const [changed, setChanged] = useState(0);
 
 
-    },[])
+    const tweets = useRecoilValue(sortTweetsList);
+    
+    
+
+    
 
     useEffect(() => {
-        console.log('Updated tweets:', tweets);
-      }, [tweets]);
+        console.log("inside of show tweets")
+       console.log(tweets);
+       
+       setChanged(changed+1)
+       router.push('/home');
+        
+    }, [tweets]);
+
+
+
     
+    return <>
+        {changed && showTweets(tweets)}
+    </> ;
+    
+    
+}
+
+
+function showTweets(tweets : tweetType[]) {
+
     return(
         <ul className="w-full sm:w-10/12 md:w-1/2 gap-2 ">
-            { fetched && (
-                            <li >
-                            {tweets.map(tweet => 
-                                <TweetCard tweetInput={tweet} clickable={true} />
+            
+                <li >
+                    {tweets.map(tweet => 
+                        <TweetCard tweetInput={tweet} clickable={true} />
                                 
-                            )}
-                            </li>
-                        )
-            }
+                    )}
+                </li>
+            
+            
         </ul>
     )
 }

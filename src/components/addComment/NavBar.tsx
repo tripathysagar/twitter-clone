@@ -14,7 +14,7 @@ import { UserAtom } from '@/recoil/atoms/userAtoms';
 export default function NavBar({avatar}:{avatar:number}){
 
     //const userAtom = use
-    const logo = `avatars/${avatar}.svg`;
+    const logo = `../avatars/${avatar}.svg`;
     const router = useRouter();
 
     async function signOut (){

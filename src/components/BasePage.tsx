@@ -9,7 +9,7 @@ export default function BasePage(){
 
     const  Signup =  () => {
         console.log("Signup clicked!");
-        router.push("/signup");
+        router.replace("/signup",  { scroll: true });
       };
       
     const  Signin =  () => {

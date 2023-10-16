@@ -1,18 +1,21 @@
 import axios from "axios";
 import { useState } from "react";
-import { useRecoilValue } from 'recoil';
-
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { Button } from "@/components/Button";
 import { UserAtom } from '@/recoil/atoms/userAtoms';
+import { TweetsAtom } from "@/recoil/atoms/tweetsAtoms";
+import { tweetType } from "@/lib/zodTypes";
  
 
 export default function CreateTweet(){
     const [tweet, setTweet] = useState("");
     const user = useRecoilValue(UserAtom);
+    const [tweets, setTweets] = useRecoilState(TweetsAtom);
 
+    
     async function postTweet(){
-        if(tweet.length <= 128){
+        if(tweet.length <= 128 && tweet !== ''){
 
             const body = {
                 tweet: tweet
@@ -21,9 +24,37 @@ export default function CreateTweet(){
 
                 const resp = await axios.post('/api/tweet', body);
                 setTweet(''); 
+
+                console.log("+++++++++++++++++")
+                console.log(`user : ${user?.name}`)
+
+                if(user !== undefined)
                 if (resp.status === 200) {
+                    console.log("++++++++++++");
                     console.log(resp);
+                    const now = new Date();
+                    const utcTimestamp = now.toISOString();
+                    const userTweeet : tweetType ={
+                        id: resp.data.id,
+                        tweet: tweet,
+                        createdAt: resp.data.createdAt, 
+                        avatar: user.avatar,
+                        likesCount: 0,
+                        commentsCount: 0,
+                        authorName: user.name,
+                        authorEmail: user.email,
+                        userLiked: false
+                    }
+
+                    console.log(`userTweeet value is : ${userTweeet}`);
+                    console.log(`tweets before updating: ${tweets}`);
+
                     
+                    setTweets((prevTweets) => [
+                         ...prevTweets,userTweeet
+                    ]);
+                    console.log(`after updated ${typeof tweets[0].createdAt}`);
+
                 } else {
                     throw new Error(resp.data.message);
                 }
@@ -37,7 +68,9 @@ export default function CreateTweet(){
     }
 
     return (
+
         <div className="flex flex-col items-center justify-center m-3">
+            
             <div className=" w-full sm:w-10/12 md:w-1/2 gap-2 ">
                 <label htmlFor="large-input" 
                 className="block  text-sm font-medium text-white">

@@ -17,9 +17,7 @@ export default  function Signup() {
     const [name, setName] = useState('');
     const [logo, setLogo] = useState(0);
 
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
-
+    
     const arr : JSX.Element[] = [];
 
     for(let i:number = 1; i < 13; i++){
@@ -64,7 +62,7 @@ export default  function Signup() {
       
           if (resp.status === 200) {
             console.log(resp);
-            router.push('home');
+            router.replace('home');
           } else {
             throw new Error(resp.data.message);
           }

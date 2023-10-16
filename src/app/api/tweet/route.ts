@@ -6,7 +6,6 @@ import { getUserFromJWT } from "@/lib/getUserFromJWT";
 export async function POST(req: Request) {
     let status: number = 500;
     const cookieStore = cookies()
-
     try{
         const jsonBody = await req.json(); //fetch the body of the req
         const cookie = cookieStore.get('t-cookie');
@@ -44,6 +43,8 @@ export async function POST(req: Request) {
         const resp = NextResponse.json(
             {
               message: "tweet created",
+              id: tweet.id,
+              createdAt: tweet.createdAt
             },
             {status: 200},
         )
