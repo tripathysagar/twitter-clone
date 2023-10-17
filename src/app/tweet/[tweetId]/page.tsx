@@ -4,23 +4,28 @@ import { cookies } from "next/headers";
 import {  userDetails } from '@/lib/zodTypes';
 import BasePage from "@/components/addComment/BasePage";
 import { getUserFromJWT } from "@/lib/getUserFromJWT";
-import NavBar from "@/components/addComment/NavBar";
-import { redirect } from "next/navigation";
-import { UserAtom } from '@/recoil/atoms/userAtoms';
+
 import { prisma } from '@/lib/prismaInit';
 
 //import BasePage from "../../components/addComment/BasePage";
 
 
-export default async function Page({ params }: { params: { tweetId: number } }) {
+export default async function Page({ params }: { params: { tweetId: string } }) {
+  const paramTweetId = Number(params.tweetId);
 
   const cookieStore = cookies();
+  console.log("********************")
+
+  console.log(paramTweetId);
+  console.log("********************")
+  
+
   
   const cookie = cookieStore.get('t-cookie');
 
   if(cookie !== undefined ) {
     //extract or get the user details filter by the ID
-    const userExists = await getUserFromJWT(cookie.value)
+    const userExists = await getUserFromJWT(cookie.value);
 
     console.log(`userExists : ${userExists}`);
     
@@ -31,77 +36,106 @@ export default async function Page({ params }: { params: { tweetId: number } }) 
           // the user is not present in the DB
           // TODO remove cookie
       }else{
-          // TODO : genrate new jwt with updated timeperiod and, set that value
-          
-          /*const res = await axios.get('/api/getTweet',{
-            headers: {
-              tweetId: params.tweetId
-            }
-          })
-          */
 
-          const tweet = await prisma.tweet.findFirst({
-            where: {
-              id: Number(params.tweetId),
-            },
-            include : {
-              author: {
-                  select: {
-                      name: true,
-                      avatar: true,
-                      email: true
-                  }
-              },
-              likes: {
-                where: {
-                    authorId: userExists.id, // Fill in the userId to filter likes by a specific user
-                },
+        const tweet = await prisma.tweet.findFirst({
+          where: {
+            id: paramTweetId,
+          },
+          include : {
+            author: {
                 select: {
+                    name: true,
+                    avatar: true,
+                    email: true,
                     id: true
                 }
-            }
-            
-          }})
-
-          if(tweet === null){
-            return notFound()
+            },
+            likes: {
+              where: {
+                  authorId: userExists.id, // Fill in the userId to filter likes by a specific user
+              },
+              select: {
+                id: true
+              }
+            }}
           }
+        )
 
-          const user = userDetails.safeParse(userExists);
+        if(tweet === null){
+          return notFound()
+        }
+        //console.log(tweet);
+
+        const user = userDetails.safeParse(userExists);
+        //console.log(user);
 
 
-          const flattenedTweet = {
-            id: tweet.id,
-            tweet: tweet.tweet,
-            createdAt: tweet.createdAt,
-            avatar: tweet.author.avatar,
-            authorName: tweet.author.name,
-            authorEmail: tweet.author.email,
-            likesCount: tweet.likesCount,
-            commentsCount: tweet.commentsCount,
-            userLiked: tweet.likes[0] === undefined ? false : true
+
+        const flattenedTweet = {
+          id: tweet.id,
+          tweet: tweet.tweet,
+          createdAt: tweet.createdAt,
+          avatar: tweet.author.avatar,
+          authorName: tweet.author.name,
+          authorEmail: tweet.author.email,
+          authorId: tweet.author.id,
+          likesCount: tweet.likesCount,
+          commentsCount: tweet.commentsCount,
+          userLiked: tweet.likes[0] === undefined ? false : true
         };
 
-        console.log(flattenedTweet);
+        //console.log(flattenedTweet);
+
+        
+        const commnets = await prisma.comments.findMany({
+          where: {
+            tweetId: tweet.id
+          }, 
+          orderBy:{
+            createdAt: 'desc',
+          },
+          include : {
+            author: {
+                select: {
+                    name: true,
+                    avatar: true,
+                    email: true,
+                }
+            }
+          }
+        })
+
+
+        const flattenedCommnets = commnets.map((obj) =>{
+          return {
+            id: obj.id,
+            comment: obj.comment,
+            createdAt: obj.createdAt,
+            authorId: obj.authorId,
+            tweetId: obj.tweetId,
+            authorName: obj.author.name,
+            authorEmail: obj.author.email,
+            authorAvatar: obj.author.avatar,
+          }
+        })
+
+        //console.log(flattenedCommnets);
+        
         if(user.success){
-        console.log(user?.data)
-
-        return (
-          <main>
-          <div className="sticky top-0 z-50"> 
-            <NavBar avatar={user.data.avatar} />
+          //console.log(user?.data)
   
-          </div>
-            <BasePage  tweet={flattenedTweet}/>
-          </main>
-        )
-          
-          
-        }
-    }}}
+          return (
+            <main>
+              <div>{params.tweetId.toString()}</div>
+              <BasePage  tweet={flattenedTweet} comments={flattenedCommnets} user={user.data}/>
+            </main>
+          )
+          }
+    }}
+  }
 
   
 
-  return <div>oops</div>
+  return <div>{params.tweetId.toString()}</div>
 
 }

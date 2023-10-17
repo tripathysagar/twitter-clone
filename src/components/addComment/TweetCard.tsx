@@ -3,29 +3,33 @@
 import axios from "axios";
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { tweetType } from "@/lib/zodTypes";
 import { AddTweetAtom } from '@/recoil/atoms/tweetAtom';
 
+// TODO use recoil in the page to 
+export default function TweetCard({tweetInput}:{tweetInput:tweetType}){
+    const router = useRouter();
+    
 
-export default function TweetCard({tweetInput, clickable}:{tweetInput:tweetType, clickable:boolean}){
     const [tweet, setTweet] = useState(tweetInput);
 
-    const setTweetToAddComment = useSetRecoilState(AddTweetAtom);
+
+    //console.log(`tweet : ${{...tweet}}`)
+
 
     // if clickable is true indicating the call has come from the comment page 
     // else it is in the home page
-    const avatarSrc = (clickable ? "../" : "") +`avatars/${tweet.avatar}.svg`;
+    const avatarSrc =  `../avatars/${tweet?.avatar}.svg`;
 
-    const router = useRouter();
 
 
     async function likeTweet(likeButton:boolean, tweetId: Number ){
         try{
             const body = {
                 liked: likeButton,
-                tweetId: tweetId,
+                tweetId: tweet?.id,
               };
             axios.post('/api/like', body);
         }catch(error){
@@ -33,16 +37,15 @@ export default function TweetCard({tweetInput, clickable}:{tweetInput:tweetType,
         }
     }
 
-    async function tweetClicked() {
-        const cardClicked = `/tweet/${tweet.id}`;
-        console.log(cardClicked);
-        setTweetToAddComment(tweet);
-        router.push(cardClicked);
-    }
+    
     return (
         <div className=" pt-2 flex w-full sm:w-10/12 md:w-1/2 bg-red-800 font-sans " key={tweet.id.toString()}>
             <div className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-800  rounded border w-full">
-                <div className="flex  flex-row ml-2 ">
+                <div 
+                className="flex  flex-row ml-2 "
+                onClick={(e) => router.push(`/profile/${tweet.authorId}`)}
+
+                >
                     <img className="w-10 h-10 mt-2 rounded-2xl border border-gray-100 dark:border-gray-700 " src={avatarSrc}/>
 
                     <div className="flex items-center">
@@ -53,10 +56,7 @@ export default function TweetCard({tweetInput, clickable}:{tweetInput:tweetType,
                     </div>  
                 </div>
 
-                <span onClick={(e) =>{
-                    if(clickable)
-                        tweetClicked()
-                }}>
+                <span>
                     <p className="text-black dark:text-white block  leading-snug mt-3 ml-2">{tweet.tweet}</p>
                     <p className="text-gray-500 dark:text-gray-400  py-1 my-0.5 ml-2 font-sans">{formatTweetDate(tweet.createdAt.toString())}</p>
                     
@@ -100,12 +100,7 @@ export default function TweetCard({tweetInput, clickable}:{tweetInput:tweetType,
                             
                             <span className="ml-1">{tweet.likesCount.toString()}</span>
                         </div>
-                    <div 
-                    className="flex items-center mr-6"
-                    onClick={(e) =>{
-                        tweetClicked()
-                    }}
-                    >
+                    <div className="flex items-center mr-6">
                         <svg className="fill-current h-5 w-auto r-1re7ezh r-4qtqp9 r-yyyyoo r-1xvli5t r-dnmrzs r-bnwqim r-1plcrui r-lrvibr" viewBox="0 0 24 24" ><g><path d="M14.046 2.242l-4.148-.01h-.002c-4.374 0-7.8 3.427-7.8 7.802 0 4.098 3.186 7.206 7.465 7.37v3.828c0 .108.044.286.12.403.142.225.384.347.632.347.138 0 .277-.038.402-.118.264-.168 6.473-4.14 8.088-5.506 1.902-1.61 3.04-3.97 3.043-6.312v-.017c-.006-4.367-3.43-7.787-7.8-7.788zm3.787 12.972c-1.134.96-4.862 3.405-6.772 4.643V16.67c0-.414-.335-.75-.75-.75h-.396c-3.66 0-6.318-2.476-6.318-5.886 0-3.534 2.768-6.302 6.3-6.302l4.147.01h.002c3.532 0 6.3 2.766 6.302 6.296-.003 1.91-.942 3.844-2.514 5.176z"></path></g></svg>
                         <span className="ml-1">{tweet.commentsCount.toString()}</span>
                     </div>

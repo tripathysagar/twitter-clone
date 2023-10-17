@@ -96,7 +96,7 @@ export async function GET(req: Request) {
                     select: {
                         name: true,
                         avatar: true,
-                        email: true
+                        email: true,
                     }
                 },
                 likes: {
@@ -108,7 +108,6 @@ export async function GET(req: Request) {
                     }
                 }
             }
-            
         })
         console.log("+++++++++++++++++++++")
         
@@ -120,6 +119,7 @@ export async function GET(req: Request) {
             avatar: tweet.author.avatar,
             authorName: tweet.author.name,
             authorEmail: tweet.author.email,
+            authorId: tweet.authorId,
             likesCount: tweet.likesCount,
             commentsCount: tweet.commentsCount,
             userLiked: tweet.likes[0] === undefined ? false : true

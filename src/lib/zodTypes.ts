@@ -1,3 +1,4 @@
+
 import { z } from 'zod';
 
 export const signUpBody = z.object({
@@ -40,6 +41,7 @@ export const tweet = z.object({
     avatar: z.number().min(1).max(12),
     likesCount: z.number(),
     commentsCount: z.number(),
+    authorId: z.number(),
     authorName: z.string(),
     authorEmail: z.string().email(),
     userLiked: z.boolean()
@@ -47,3 +49,23 @@ export const tweet = z.object({
 
 export type tweetType = z.infer<typeof tweet>;
 
+export const addComment = z.object({
+    comment: z.string().max(129),
+    tweetId: z.number(),
+})
+
+export type addCommentType = z.infer<typeof tweet>;
+
+
+export const  commnet =  z.object({
+    id: z.number(),
+    comment: z.string().max(129),
+    createdAt: z.date(), 
+    authorId: z.number(),
+    tweetId: z.number(),
+    authorName: z.string(),
+    authorEmail: z.string().email(),
+    authorAvatar: z.number(),
+})
+
+export type commentType = z.infer<typeof commnet>;

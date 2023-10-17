@@ -4,26 +4,29 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { Button } from "@/components/Button";
 import { UserAtom } from '@/recoil/atoms/userAtoms';
-import { TweetsAtom } from "@/recoil/atoms/tweetsAtoms";
-import { tweetType } from "@/lib/zodTypes";
+
+import { commentType, tweetType } from "@/lib/zodTypes";
+import { AddTweetAtom } from "@/recoil/atoms/tweetAtom";
+import { CommentsAtom } from "@/recoil/atoms/commentsAtoms";
  
 
-export default function CreateTweet(){
-    const [tweet, setTweet] = useState("");
+export default function AddCommnet(){
+    const [comment, setComment] = useState("");
     const user = useRecoilValue(UserAtom);
-    const [tweets, setTweets] = useRecoilState(TweetsAtom);
+    const [tweet, setTweet] = useRecoilState(AddTweetAtom);
+    const [comments, setComments] = useRecoilState(CommentsAtom);
 
     
-    async function postTweet(){
-        if(tweet.length <= 128 && tweet !== ''){
+    async function postComment(){
+        if(comment.length <= 128 && comment !== '' && tweet !== undefined){
 
             const body = {
-                tweet: tweet
+                tweetId: tweet.id,
+                comment: comment,
             };
             try{
-
-                const resp = await axios.post('/api/tweet', body);
-                setTweet(''); 
+                const resp = await axios.post('/api/comments', body);
+                setComment(''); 
 
                 console.log("+++++++++++++++++")
                 console.log(`user : ${user?.name}`)
@@ -32,29 +35,26 @@ export default function CreateTweet(){
                 if (resp.status === 200) {
                     console.log("++++++++++++");
                     console.log(resp);
-                    const now = new Date();
-                    const utcTimestamp = now.toISOString();
-                    const userTweeet : tweetType ={
+                    setTweet({
+                        ...tweet,
+                        commentsCount: tweet.commentsCount + 1
+                    });
+
+                    const newComment:commentType={
                         id: resp.data.id,
-                        tweet: tweet,
-                        createdAt: resp.data.createdAt, 
-                        avatar: user.avatar,
-                        likesCount: 0,
-                        commentsCount: 0,
+                        comment: comment,
+                        createdAt: resp.data.createdAt,
+                        authorId: resp.data.authorId,
+                        tweetId: tweet.id,
                         authorName: user.name,
                         authorEmail: user.email,
-                        userLiked: false
+                        authorAvatar: user.avatar
                     }
+                    setComments((prevCommnets)=>[
+                        newComment, ...prevCommnets
+                    ])
 
-                    console.log(`userTweeet value is : ${userTweeet}`);
-                    console.log(`tweets before updating: ${tweets}`);
-
-                    
-                    setTweets((prevTweets) => [
-                        userTweeet,...prevTweets,
-                    ]);
-                    console.log(`after updated ${typeof tweets[0].createdAt}`);
-
+                    //console.log(tweet);
                 } else {
                     throw new Error(resp.data.message);
                 }
@@ -69,12 +69,12 @@ export default function CreateTweet(){
 
     return (
 
-        <div className="flex flex-col items-center justify-center m-3">
+        <div className=" gap-2 flex flex-col w-full sm:w-10/12 md:w-1/2 m-3 rounded-2xl bg-green-800">
             
-            <div className=" w-full sm:w-10/12 md:w-1/2 gap-2 ">
+            <div className="  ">
                 <label htmlFor="large-input" 
                 className="block  text-sm font-medium text-white">
-                    <h1>Hello {user?.name} 👋</h1>
+                    
                 </label>
 
                 <div className="relative  bg-slate-700  rounded-sm" data-te-input-wrapper-init>
@@ -82,24 +82,24 @@ export default function CreateTweet(){
                         className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary  dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary "
                         id="exampleFormControlTextarea1"
                         rows="4"
-                        placeholder="Your tweet"
-                        value={tweet}
+                        placeholder="Add your commnent"
+                        value={comment}
                         onChange={(e)=>{
-                            setTweet(e.target.value)
+                            setComment(e.target.value)
                         }}
                         >  
                     </textarea>
                 </div>
                 <div className="flex flex-row justify-end  gap-2 pt-2">
-                    {tweet.length <= 128 && <h1 className=" pt-2 font-medium font-sans text-cyan-400">
-                        {tweet.length}/128
+                    {comment.length <= 128 && <h1 className=" pb-.75 font-medium font-sans text-cyan-400">
+                        {comment.length}/128
                     </h1>}
 
-                    {tweet.length > 128 && <h1 className=" pt-2 font-medium font-sans text-rose-600">
-                        {128-tweet.length}/128
+                    {comment.length > 128 && <h1 className=" pt-2 font-medium font-sans text-rose-600">
+                        {128-comment.length}/128
                     </h1>}
 
-                    <Button label={"Post"} width={80} navFunc={postTweet} />
+                    <Button label={"Add"} width={80} navFunc={postComment} />
                     
                 </div>
             </div>

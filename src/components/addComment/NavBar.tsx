@@ -11,10 +11,11 @@ import {  useRecoilValue } from 'recoil';
 import { UserAtom } from '@/recoil/atoms/userAtoms';
 
 
-export default function NavBar({avatar}:{avatar:number}){
+export default function NavBar(){
 
+    const user = useRecoilValue(UserAtom);
     //const userAtom = use
-    const logo = `../avatars/${avatar}.svg`;
+    const logo = `../avatars/${user?.avatar}.svg`;
     const router = useRouter();
 
     async function signOut (){

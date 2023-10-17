@@ -1,18 +1,18 @@
 "use client"
 
 import axios from "axios";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useRouter } from 'next/navigation';
 import { useSetRecoilState } from 'recoil';
 
 import { tweetType } from "@/lib/zodTypes";
-import { AddTweetAtom } from '@/recoil/atoms/tweetAtom';
+//import { AddTweetAtom } from '@/recoil/atoms/tweetAtom';
 
 
 export default function TweetCard({tweetInput, clickable}:{tweetInput:tweetType, clickable:boolean}){
     const [tweet, setTweet] = useState(tweetInput);
 
-    const setTweetToAddComment = useSetRecoilState(AddTweetAtom);
+    //const setTweetToAddComment = useSetRecoilState(AddTweetAtom);
 
     // if clickable is true indicating the call has come from the comment page 
     // else it is in the home page
@@ -20,7 +20,7 @@ export default function TweetCard({tweetInput, clickable}:{tweetInput:tweetType,
 
     const router = useRouter();
 
-
+    
     async function likeTweet(likeButton:boolean, tweetId: Number ){
         try{
             const body = {
@@ -35,14 +35,18 @@ export default function TweetCard({tweetInput, clickable}:{tweetInput:tweetType,
 
     async function tweetClicked() {
         const cardClicked = `/tweet/${tweet.id}`;
-        console.log(cardClicked);
-        setTweetToAddComment(tweet);
+        //console.log(cardClicked);
+        //setTweetToAddComment(tweet);
         router.push(cardClicked);
     }
     return (
-        <div className=" pt-2 flex  bg-gray-50 bg-red-800 font-sans " key={tweet.id.toString()}>
+        <Fragment  >
+        <div  className=" pt-2 flex   bg-red-800 font-sans " >
             <div className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-800  rounded border w-full">
-                <div className="flex  flex-row ml-2 ">
+                <div 
+                className="flex  flex-row ml-2 "
+                onClick={(e) => router.push(`/profile/${tweetInput.authorId}`)}
+                >
                     <img className="w-10 h-10 mt-2 rounded-2xl border border-gray-100 dark:border-gray-700 " src={avatarSrc}/>
 
                     <div className="flex items-center">
@@ -114,6 +118,7 @@ export default function TweetCard({tweetInput, clickable}:{tweetInput:tweetType,
                 
             </div>
         </div>
+        </Fragment>
     );
 }
 
