@@ -16,10 +16,21 @@ model User {
   password String
   name  String
   avatar Int
+  followerCount Int @default(0)
   tweets Tweet[]
   comments Comments[]
   likes Likes[]
+  followers Followers[]
 }
+
+model Followers{
+  id Int @id @default(autoincrement())
+  parent User @relation(fields: [parentId], references: [id])
+  parentId Int
+  followerId Int
+  followingSince DateTime @default(now())
+}
+
 
 
 model Tweet {

@@ -8,7 +8,7 @@ import ShowTweet from './ShowCommnets';
 import { CommentsAtom } from '@/recoil/atoms/commentsAtoms';
 import { useEffect } from 'react';
 import { UserAtom } from '@/recoil/atoms/userAtoms';
-import NavBar from './NavBar';
+import NavBar from '../NavBar';
 import { AddTweetAtom } from '@/recoil/atoms/tweetAtom';
 
 

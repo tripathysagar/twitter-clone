@@ -62,7 +62,7 @@ export default  function Signup() {
       
           if (resp.status === 200) {
             console.log(resp);
-            router.replace('home');
+            router.replace('/home');
           } else {
             throw new Error(resp.data.message);
           }

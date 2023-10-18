@@ -13,6 +13,16 @@ export function Button({label, width, navFunc}:{label:string, width:Number, navF
       </button>
     )
 
+    if(width === 28)
+    return (
+        <button
+        onClick={navFunc} 
+        type="button" 
+        className="w-28 text-white bg-[#1da1f2] focus:outline-none   font-medium rounded-full text-sm px-5  text-center mr-2  ">
+            {label}
+        
+      </button>
+    )
     return (
         <button
         onClick={navFunc} 

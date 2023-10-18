@@ -1,5 +1,5 @@
 
-import { z } from 'zod';
+import { boolean, z } from 'zod';
 
 export const signUpBody = z.object({
     email: z.string().email(),
@@ -69,3 +69,27 @@ export const  commnet =  z.object({
 })
 
 export type commentType = z.infer<typeof commnet>;
+
+
+export const followInput = z.object({
+    parentId: z.number(),
+    followStatus: z.boolean()
+})
+
+export type followInputType = z.infer<typeof followInput>;
+
+
+
+
+
+
+
+export const profile = z.object({
+    id: z.number(),
+    name: z.string(),
+    email: z.string().email(),
+    avatar: z.number(),
+    followingSince: z.union([z.date(), z.null(), z.undefined()]).optional(),
+  });
+  
+  export type profileType = z.infer<typeof profile>;

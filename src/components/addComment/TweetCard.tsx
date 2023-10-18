@@ -112,7 +112,7 @@ export default function TweetCard({tweetInput}:{tweetInput:tweetType}){
     );
 }
 
-function formatTweetDate(dateString: string): string {
+ export function formatTweetDate(dateString: string): string {
     const date = new Date(dateString);
     const options: Intl.DateTimeFormatOptions = {
       year: 'numeric',
