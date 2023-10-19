@@ -1,4 +1,5 @@
 
+import NavBar from '@/components/NavBar';
 import type { Metadata } from 'next';
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -26,7 +27,10 @@ export default async function RootLayout({
         return (
           <html lang="en">
             <body className="{inter.className} font-serif" > 
-                {children}
+              <div className="sticky top-0 z-50"> 
+                  <NavBar />
+                  {children}
+              </div>
             </body>
           </html>
         )

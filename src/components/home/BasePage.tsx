@@ -1,18 +1,24 @@
 "use client"
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { UserAtom } from '@/recoil/atoms/userAtoms';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import {type userDetailsType} from '../../lib/zodTypes';
-import Navbar from '@/components/home/NavBar';
 import CreateTweet from './CreateTweet';
 import ShowTweet from './ShowTweet';
 import axios from 'axios';
 import { TweetsAtom } from '@/recoil/atoms/tweetsAtoms';
+import { hamburgButtonAtom } from '@/recoil/atoms/hamburgButtonAtom';
+import { searchBottonStatus } from "@/recoil/atoms/searchQueryAtom";
 
 
 export default function BasePage({user}:{user:userDetailsType}){
-
+    // false : show the tweets
+    // true : hide the tweets
+    const [searchButtonClicked, setSearchButtonClicked] = useRecoilState(searchBottonStatus);
+    
+    const [hamburgIconClicked, setHamburgIconClicked] = useRecoilState(hamburgButtonAtom);
+    const [showSpan, setShowSpan] = useState("");
     
     const [userAtom, setUserAtom] = useRecoilState(UserAtom);
     const [tweets, setTweets] = useRecoilState(TweetsAtom);
@@ -40,10 +46,16 @@ export default function BasePage({user}:{user:userDetailsType}){
 }
 
     useEffect(()=>{
+        setSearchButtonClicked(false);
         setUserAtom(user);
         fetchTweets();
-        console.log(`useratrom : ${userAtom}`)
+        setHamburgIconClicked(false);
+        //console.log(`useratrom : ${userAtom}`)
     },[])
+
+    useEffect(()=>{
+        setShowSpan(hamburgIconClicked ? "hidden md:block" : "");
+    },[hamburgIconClicked])
 
     if(userAtom !== undefined)
     return(
@@ -51,17 +63,20 @@ export default function BasePage({user}:{user:userDetailsType}){
         <main >
             
             
+            {!searchButtonClicked && 
             <div className="relative">
+                <span  className={showSpan}> 
+                    <div className='flex flex-col '>
+                        <CreateTweet />
+                    </div>
 
-                <div className='flex flex-col '>
-                    <CreateTweet />
-                </div>
-
-                <div className='flex flex-col items-center justify-center m-3 '>
-                    <ShowTweet />
-                    
-                </div>
+                    <div className='flex flex-col items-center justify-center m-3 '>
+                        <ShowTweet />
+                        
+                    </div>
+                </span>
             </div>
+            }
             
             
         </main>

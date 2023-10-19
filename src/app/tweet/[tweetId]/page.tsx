@@ -126,7 +126,7 @@ export default async function Page({ params }: { params: { tweetId: string } }) 
   
           return (
             <main>
-              <div>{params.tweetId.toString()}</div>
+              
               <BasePage  tweet={flattenedTweet} comments={flattenedCommnets} user={user.data}/>
             </main>
           )

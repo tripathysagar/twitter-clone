@@ -25,15 +25,9 @@ export default async function HomePage(){
     }else{
       const user = userDetails.safeParse(userExists);
       if(user.success){
-        return (
-          <main>
-          <div className="sticky top-0 z-50"> 
-              <NavBar avatar={user.data.avatar} />
-  
-          </div>
-          <BasePage user={user.data} />
-          </main>
-        )
+        
+        return  <BasePage user={user.data} />
+          
 
       }
   }}

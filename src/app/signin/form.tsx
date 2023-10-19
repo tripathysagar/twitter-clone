@@ -88,7 +88,7 @@ export function Form(){
                       
   
                       <div className="flex tems-center justify-center">
-                          <Button label={"Log in"} width={80} navFunc={signInFunc} />
+                          <Button label={"Log in"} width={96} navFunc={signInFunc} hamburgIcon={false} />
                       </div>
                   </div>
               </div>

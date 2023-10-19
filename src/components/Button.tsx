@@ -1,7 +1,16 @@
 
  
-export function Button({label, width, navFunc}:{label:string, width:Number, navFunc: ()=>void}){
+export function Button({label, width, navFunc, hamburgIcon}:{label:string, width:Number, navFunc: ()=>void, hamburgIcon:boolean}){
     
+    if(hamburgIcon){
+        return (
+            <button
+            onClick={navFunc} 
+            type="button" 
+            className="w-60 text-black  focus:outline-none   font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2  ">
+                {label}
+          </button>)
+    }
 
     if(width === 96)
     return (

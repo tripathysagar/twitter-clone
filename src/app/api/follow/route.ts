@@ -3,7 +3,6 @@ import { cookies } from 'next/headers';
 import { prisma } from "@/lib/prismaInit";
 import { getUserFromJWT } from "@/lib/getUserFromJWT";
 import { followInput } from '@/lib/zodTypes';
-import { stat } from "node:fs";
 
 export async function POST(req: Request) {
     let status: number = 500;

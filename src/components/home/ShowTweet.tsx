@@ -12,8 +12,8 @@ export default function ShowTweet(){
     const tweets = useRecoilValue(sortTweetsList);
     
     useEffect(() => {
-        console.log("inside of show tweets")
-        console.log(tweets);
+        //console.log("inside of show tweets")
+        //console.log(tweets);
 
         
     }, [tweets]);

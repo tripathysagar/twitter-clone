@@ -6,3 +6,8 @@ export const TweetsAtom = atom<tweetType[]>({
     default: []
 });
 
+
+export const searchTweetsAtom = atom<tweetType[]>({
+    key: 'searchTweetsAtom',
+    default: []
+});

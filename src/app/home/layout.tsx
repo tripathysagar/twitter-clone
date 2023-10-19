@@ -7,6 +7,8 @@ import { useSetRecoilState } from 'recoil';
 import { getUserFromJWT } from '@/lib/getUserFromJWT';
 import { userDetails, userDetailsType } from '@/lib/zodTypes';
 import { UserAtom } from '@/recoil/atoms/userAtoms';
+import NavBar from '@/components/NavBar';
+import Result from '@/components/search/Result';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -29,7 +31,14 @@ export default async function RootLayout({
         return (
           <html lang="en">
             <body className="{inter.className} font-serif" > 
-                {children}
+              <div className="sticky top-0 z-50"> 
+                  <NavBar />
+                  <div className="relative flex flex-col items-center justify-center m-3">
+                    <Result />
+                  </div>
+
+                  {children}
+              </div>
             </body>
           </html>
         )

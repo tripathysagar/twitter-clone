@@ -126,7 +126,7 @@ export default  function Signup() {
                     
                 </div>
                 <div className="flex tems-center justify-center">
-                        <Button label={"Sign Up"} width={80} navFunc={signUpFunc} />
+                        <Button label={"Sign Up"} width={96} navFunc={signUpFunc} hamburgIcon={false}/>
                         
                 </div>
             </div>
