@@ -10,7 +10,6 @@ import {  useRecoilState, useRecoilValue } from 'recoil';
 import { hamburgButtonAtom } from '@/recoil/atoms/hamburgButtonAtom';
 
 import { UserAtom } from '@/recoil/atoms/userAtoms';
-import { useState } from 'react';
 import SearchBar from './search/SearchBar';
 
 

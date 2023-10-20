@@ -1,3 +1,5 @@
+"use client"
+
 import axios from "axios";
 import { useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
@@ -43,7 +45,8 @@ export default function CreateTweet(){
                         commentsCount: 0,
                         authorName: user.name,
                         authorEmail: user.email,
-                        userLiked: false
+                        userLiked: false,
+                        authorId: user.id
                     }
 
                     console.log(`userTweeet value is : ${userTweeet}`);
@@ -99,7 +102,7 @@ export default function CreateTweet(){
                         {128-tweet.length}/128
                     </h1>}
 
-                    <Button label={"Post"} width={80} navFunc={postTweet} />
+                    <Button label={"Post"} width={80} navFunc={postTweet} hamburgIcon={false} />
                     
                 </div>
             </div>

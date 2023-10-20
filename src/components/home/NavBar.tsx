@@ -41,7 +41,7 @@ export default function NavBar({avatar}:{avatar:number}){
 
                     <Image src={logo}  width={40} height={20} alt="avatar" className='rounded-lg'/>
                     <div>
-                    <Button label={"Sign out"} width={70} navFunc={signOut}  />
+                    <Button label={"Sign out"} width={70} navFunc={signOut} hamburgIcon={false} />
                     </div>
                                 
                 </div>

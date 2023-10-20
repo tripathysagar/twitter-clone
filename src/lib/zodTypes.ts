@@ -91,6 +91,7 @@ export const profile = z.object({
     email: z.string().email(),
     avatar: z.number(),
     followingSince: z.union([z.date(), z.null(), z.undefined()]).optional(),
+    followerCount: z.number()
   });
   
   export type profileType = z.infer<typeof profile>;

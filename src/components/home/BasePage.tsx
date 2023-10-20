@@ -27,7 +27,7 @@ export default function BasePage({user}:{user:userDetailsType}){
         try {
             const resp = await axios.get('/api/tweet', {
                 headers: {
-                    offset: tweets.length
+                    offset: 0
                 }
             });
 
@@ -39,11 +39,11 @@ export default function BasePage({user}:{user:userDetailsType}){
             ]);
 
 
-            console.log(tweets);
+            //console.log(tweets);
           } catch (error) {
             console.error('Error fetching tweets:', error);
           }
-}
+    }
 
     useEffect(()=>{
         setSearchButtonClicked(false);
@@ -60,10 +60,10 @@ export default function BasePage({user}:{user:userDetailsType}){
     if(userAtom !== undefined)
     return(
         
-        <main >
+        <div >
             
             
-            {!searchButtonClicked && 
+            { !searchButtonClicked && 
             <div className="relative">
                 <span  className={showSpan}> 
                     <div className='flex flex-col '>
@@ -79,10 +79,17 @@ export default function BasePage({user}:{user:userDetailsType}){
             }
             
             
-        </main>
+        </div>
+    )
+    
+    return (<div>
+        Loading...
+    </div>)
         
 
         
-    )}
+    }
 
+
+    //!searchButtonClicked
 

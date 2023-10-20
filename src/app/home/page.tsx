@@ -8,6 +8,7 @@ import { getUserFromJWT } from "@/lib/getUserFromJWT";
 import NavBar from "@/components/home/NavBar";
 import { redirect } from "next/navigation";
 import { UserAtom } from '@/recoil/atoms/userAtoms';
+import { fetchTweets } from "@/lib/fetchTweets";
 
 
 export default async function HomePage(){
@@ -26,6 +27,8 @@ export default async function HomePage(){
       const user = userDetails.safeParse(userExists);
       if(user.success){
         
+        //const tweets = await fetchTweets(user.data.id, 0);
+        //console.log(tweets);
         return  <BasePage user={user.data} />
           
 

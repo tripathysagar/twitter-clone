@@ -35,7 +35,7 @@ export async function POST(req: Request) {
         // user shoud not follow itself
         if(userExists.id === parentId){
             status = 400;
-            throw new Error("bad input");
+            throw new Error("Can not follow yourself!!!");
 
         }
         

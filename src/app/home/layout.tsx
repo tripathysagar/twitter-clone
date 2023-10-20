@@ -29,21 +29,16 @@ export default async function RootLayout({
   if(cookie !== undefined ) {
 
         return (
-          <html lang="en">
-            <body className="{inter.className} font-serif" > 
-              <div className="sticky top-0 z-50"> 
-                  <NavBar />
-                  <div className="relative flex flex-col items-center justify-center m-3">
-                    <Result />
-                  </div>
-
-                  {children}
-              </div>
-            </body>
-          </html>
+          
+            <div className="sticky top-0 z-50"> 
+                <NavBar />
+                {children}
+            </div>
+            
         )
       
     }
   redirect('/');
   
 }
+

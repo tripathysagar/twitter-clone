@@ -1,4 +1,5 @@
-import { notFound } from 'next/navigation'    
+import { notFound,redirect } from 'next/navigation';
+    
 
 import { cookies } from "next/headers";
 import {  userDetails } from '@/lib/zodTypes';
@@ -14,10 +15,10 @@ export default async function Page({ params }: { params: { tweetId: string } }) 
   const paramTweetId = Number(params.tweetId);
 
   const cookieStore = cookies();
-  console.log("********************")
+  //console.log("********************")
 
-  console.log(paramTweetId);
-  console.log("********************")
+  //console.log(paramTweetId);
+  //console.log("********************")
   
 
   
@@ -27,7 +28,7 @@ export default async function Page({ params }: { params: { tweetId: string } }) 
     //extract or get the user details filter by the ID
     const userExists = await getUserFromJWT(cookie.value);
 
-    console.log(`userExists : ${userExists}`);
+    //console.log(`userExists : ${userExists}`);
     
     if(userExists !== null){
       
@@ -136,6 +137,6 @@ export default async function Page({ params }: { params: { tweetId: string } }) 
 
   
 
-  return <div>{params.tweetId.toString()}</div>
+  redirect('/');
 
 }

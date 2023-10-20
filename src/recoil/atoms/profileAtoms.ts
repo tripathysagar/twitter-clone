@@ -14,7 +14,3 @@ export const ProfileAtom = atom<profileType >({
 });
 
 
-export const searchProfilesAtom = atom<profileType[] >({
-    key: 'profile',
-    default: []
-});

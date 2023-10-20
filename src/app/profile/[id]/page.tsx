@@ -1,5 +1,5 @@
 
-import { notFound } from 'next/navigation'    
+import { redirect } from "next/navigation";
 
 import { cookies, headers } from "next/headers";
 import {  userDetails } from '@/lib/zodTypes';
@@ -58,7 +58,27 @@ export default async function Page({ params }: { params: { id: number } }) {
           email: accountReq.email,
           avatar: accountReq.avatar,
           followingSince: parentFollower?.followingSince,
+          followerCount: accountReq.followerCount
         }
+        
+        const tweets = await prisma.tweet.findMany({
+          where: {
+            authorId: profileData.id
+          }
+        });
+
+
+        const following = await prisma.user.findMany({
+          where: {
+            followers: {
+              some: {
+                followerId: profileData.id,
+              },
+            },
+          },
+        });
+
+        console.log(following);
         
         return (
            <BasePage profileData={profileData} user={user.data}/> 
@@ -69,6 +89,7 @@ export default async function Page({ params }: { params: { id: number } }) {
 
   
 
-  return <div>profile page</div>
+  redirect('/');
+
 
 }

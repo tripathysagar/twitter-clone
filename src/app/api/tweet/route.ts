@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from 'next/headers';
 import { prisma } from "@/lib/prismaInit";
 import { getUserFromJWT } from "@/lib/getUserFromJWT";
+import { fetchTweets } from "@/lib/fetchTweets";
 
 export async function POST(req: Request) {
     let status: number = 500;
@@ -83,14 +84,15 @@ export async function GET(req: Request) {
         }
 
         const offset = Number(req.headers.get('offset'));
-        console.log(offset * 5);
+        //console.log(offset * 5);
         
+        /*
         const tweets = await prisma.tweet.findMany({
             orderBy:{
                   createdAt: 'desc',
                 },
-            skip: offset * 5,
-            take: 5, 
+            skip: offset * 25,
+            take: 25, 
             include : {
                 author: {
                     select: {
@@ -124,10 +126,13 @@ export async function GET(req: Request) {
             commentsCount: tweet.commentsCount,
             userLiked: tweet.likes[0] === undefined ? false : true
         }));
+        */
+       const tweets = await fetchTweets(userExists.id, offset);
 
         //console.log(flattenedTweets);
-        return NextResponse.json(flattenedTweets,
-          { status: 200 }
+        return NextResponse.json(
+            tweets,
+            { status: 200 }
         );
 
     }catch(error:any){

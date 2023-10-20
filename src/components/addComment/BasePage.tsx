@@ -8,13 +8,15 @@ import ShowTweet from './ShowCommnets';
 import { CommentsAtom } from '@/recoil/atoms/commentsAtoms';
 import { useEffect, useState } from 'react';
 import { UserAtom } from '@/recoil/atoms/userAtoms';
-import NavBar from '../NavBar';
 import { AddTweetAtom } from '@/recoil/atoms/tweetAtom';
 import { hamburgButtonAtom } from '@/recoil/atoms/hamburgButtonAtom';
+import { searchBottonStatus } from '@/recoil/atoms/searchQueryAtom';
 
 
 export default function BasePage({tweet, comments, user}:{tweet:tweetType, comments:commentType[], user:userDetailsType}){
    
+    const [searchButtonClicked, setSearchButtonClicked] = useRecoilState(searchBottonStatus);
+
     const [hamburgIconClicked, setHamburgIconClicked] = useRecoilState(hamburgButtonAtom);
 
     const  setUserAtom = useSetRecoilState(UserAtom);
@@ -27,7 +29,7 @@ export default function BasePage({tweet, comments, user}:{tweet:tweetType, comme
 
     useEffect(()=>{
         //console.log(comments)
-
+        setSearchButtonClicked(false);
         setCommentsAtom([...comments]);
         setUserAtom(user);
         setTweetAtom(tweet);
@@ -46,7 +48,7 @@ export default function BasePage({tweet, comments, user}:{tweet:tweetType, comme
         <main >
             <div className="bg-emerald-950 ">
                 
-                
+                    {!searchButtonClicked && 
                     <span  className={showSpan}>
                         <div className='flex  items-center justify-center '>
                             <TweetCard tweetInput={tweet}  />
@@ -59,7 +61,7 @@ export default function BasePage({tweet, comments, user}:{tweet:tweetType, comme
                         </div>
                     </span>
                 
-                
+                    }
             </div>
 
 

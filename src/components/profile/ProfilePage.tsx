@@ -8,28 +8,35 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { formatTweetDate } from "../addComment/TweetCard";
 
-
-export function ProfilePage({profileInput, selfPage}:{profileInput:profileType, selfPage: boolean}) {
+//selfPage is for indicating the loged in user trying to access its ownn page
+export function ProfilePage({profileInput, selfPage, forSearchReasult}:{
+    profileInput:profileType, 
+    selfPage: boolean,
+    forSearchReasult: boolean
+}) {
 
     
 
     
     const [profile, setProfile] = useState(profileInput);
-    console.log("+++++++++++++++++");
-    console.log(profile);
-    console.log("+++++++++++++++++")
+    //console.log("+++++++++++++++++");
+    //console.log(profile);
+    //console.log("+++++++++++++++++")
 
     // indicating if the given user already follows the user
     //console.log(`profile inside of profile page : ${profile.id, profile.email, profile.followingSince}`);
 
     const avatarSrc =  `../avatars/${profile?.avatar}.svg`;
-
+    
     useEffect(()=>{
-        console.log(profile.followingSince instanceof Date)
-        console.log(typeof profile.followingSince  )
+        //console.log(profile.followingSince instanceof Date)
+        //console.log(typeof profile.followingSince  )
+
+        console.log(profile);
+        console.log(forSearchReasult);
 
     },[profile])
-
+    
     async function addFollow(){
         const body = {
             parentId: profile.id, 
@@ -43,11 +50,13 @@ export function ProfilePage({profileInput, selfPage}:{profileInput:profileType, 
                     setProfile(prevProfile=>({
                         ...prevProfile,
                         followingSince: resp.data.followingSince,
+                        followerCount: prevProfile.followerCount + 1
                     }))
                 else
                     setProfile(prevProfile=>({
                         ...prevProfile,
-                        followingSince: null
+                        followingSince: null,
+                        followerCount: prevProfile.followerCount - 1
                     }))
                 
             }
@@ -61,9 +70,10 @@ export function ProfilePage({profileInput, selfPage}:{profileInput:profileType, 
     }
     
     return (
-        <div className=" pt-2 flex w-full sm:w-10/12 md:w-1/2 bg-red-800 font-sans " >
+        <div className=" pt-2 flex  bg-red-800 font-sans " >
+            
             <div className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-800  rounded border w-full">
-                <div className="flex  flex-row ml-2 justify-between ">
+                <div className="flex  flex-row ml-2 justify-between  mb-2">
                     <div className="flex  flex-row ml-2">
                         <img className="w-10 h-10 mt-2 rounded-2xl border border-gray-100 dark:border-gray-700 " src={avatarSrc}/>
 
@@ -82,40 +92,39 @@ export function ProfilePage({profileInput, selfPage}:{profileInput:profileType, 
                         <div className="flex bg-green-800">
                         {
                             ( profile.followingSince === undefined ||   profile.followingSince === null) &&
-                            <Button label={"follow"} width={80} navFunc={addFollow} />
+                            <Button label={"follow"} width={80} navFunc={addFollow} hamburgIcon={false}/>
                         }
                         {
                             ( profile.followingSince !== undefined && profile.followingSince !== null) &&
-                            <Button label={"un-follow"} width={80} navFunc={addFollow} />
+                            <Button label={"un-follow"} width={80} navFunc={addFollow} hamburgIcon={false}/>
 
                         }
                         </div>  
                     }
                     
                 </div>
+                <div className="flex flex-row justify-between ml-2">
                 {
                     ( profile.followingSince !== undefined && profile.followingSince !== null) &&
                     <span>
-                    following since {formatTweetDate(profile.followingSince.toString())}
-
+                    Following From: {formatTweetDate(profile.followingSince.toString())}
                     </span>
 
                 }
+                {!forSearchReasult &&
+                <div className="mr-2">
+                    <b className="mr-1">#followers:</b> 
+                    {profile.followerCount}
+                </div>   
+                }
                 </div>
+                
+            </div>
+
+            
         </div>
     );
 }
 
 
 
-
-/*
-
-
-<span>
-                    <p className="text-black dark:text-white block  leading-snug mt-3 ml-2">{tweet.tweet}</p>
-                    <p className="text-gray-500 dark:text-gray-400  py-1 my-0.5 ml-2 font-sans">{formatTweetDate(tweet.createdAt.toString())}</p>
-                    
-
-                </span>
-*/

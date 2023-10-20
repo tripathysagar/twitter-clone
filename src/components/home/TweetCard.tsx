@@ -22,6 +22,7 @@ export default function TweetCard({tweetInput, clickable}:{tweetInput:tweetType,
 
     
     async function likeTweet(likeButton:boolean, tweetId: Number ){
+        console.log(tweetId)
         try{
             const body = {
                 liked: likeButton,
@@ -34,7 +35,7 @@ export default function TweetCard({tweetInput, clickable}:{tweetInput:tweetType,
     }
 
     async function tweetClicked() {
-        const cardClicked = `/tweet/${tweet.id}`;
+        const cardClicked = `/viewTweet/${tweet.id}`;
         //console.log(cardClicked);
         //setTweetToAddComment(tweet);
         router.push(cardClicked);

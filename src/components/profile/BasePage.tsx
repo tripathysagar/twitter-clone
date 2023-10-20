@@ -10,10 +10,13 @@ import { useEffect, useState } from 'react';
 import { ProfilePage } from './ProfilePage';
 import { ProfileAtom } from '@/recoil/atoms/profileAtoms';
 import { hamburgButtonAtom } from '@/recoil/atoms/hamburgButtonAtom';
+import { searchBottonStatus } from '@/recoil/atoms/searchQueryAtom';
 
 
 
 export default function BasePage({profileData, user}:{profileData:profileType, user:userDetailsType}){
+
+    const [searchButtonClicked, setSearchButtonClicked] = useRecoilState(searchBottonStatus);
 
     const [hamburgIconClicked, setHamburgIconClicked] = useRecoilState(hamburgButtonAtom);
 
@@ -28,7 +31,7 @@ export default function BasePage({profileData, user}:{profileData:profileType, u
         setUserAtom(user);
         setProfileAtom(profileData);
         setHamburgIconClicked(false);
-
+        setSearchButtonClicked(false);
     },[])
     
 
@@ -38,20 +41,25 @@ export default function BasePage({profileData, user}:{profileData:profileType, u
     },[hamburgIconClicked])
 
     return( 
-    <main >
+    <div>
+        { !searchButtonClicked && 
+
         <div className="bg-emerald-950 ">
-            
             <span  className={showSpan}>
                 <div className='flex  items-center justify-center '>
-                    <ProfilePage  profileInput={profileData} selfPage={selfPage}/>
+                    <div className='w-full sm:w-10/12 md:w-1/2'>
+                        <ProfilePage  profileInput={profileData} selfPage={selfPage} forSearchReasult={false}/>
+
+                    </div>
                 </div>
             </span>
+        
         </div>
-    </main>)
+        }
+
+    </div>)
 
 }
 
-function setHamburgIconClicked(arg0: boolean) {
-    throw new Error('Function not implemented.');
-}
+
    
