@@ -5,7 +5,6 @@ import { extractJWT } from '@/lib/JWT';
 import { cookies } from 'next/headers';
 import { prisma } from "@/lib/prismaInit";
 import { redirect } from "next/navigation";
-import Navbar from '@/components/home/NavBar';
 
 
 export default async function Page() {

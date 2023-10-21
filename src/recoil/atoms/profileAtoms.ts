@@ -9,7 +9,7 @@ export const ProfileAtom = atom<profileType >({
         email: '',
         avatar: -1,
         followingSince: undefined,
-      
+        followerCount: 0
     }
 });
 

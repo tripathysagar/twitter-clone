@@ -70,7 +70,8 @@ export default async function Page({ params }: { params: { id: number } }) {
                 select: {
                     name: true,
                     avatar: true,
-                    email: true
+                    email: true,
+                    id: true
                 }
             },
             likes: {
@@ -84,14 +85,15 @@ export default async function Page({ params }: { params: { id: number } }) {
           }
         });
         const flattenedTweets = tweets.map(tweet => ({
-          id: tweet.id,
           tweet: tweet.tweet,
+          id: tweet.id,
           createdAt: tweet.createdAt,
           avatar: tweet.author.avatar,
-          authorName: tweet.author.name,
-          authorEmail: tweet.author.email,
           likesCount: tweet.likesCount,
           commentsCount: tweet.commentsCount,
+          authorId: tweet.author.id,
+          authorName: tweet.author.name,
+          authorEmail: tweet.author.email,
           userLiked: tweet.likes[0] === undefined ? false : true
       }));
       
@@ -159,3 +161,6 @@ export default async function Page({ params }: { params: { id: number } }) {
 
 
 }
+
+
+

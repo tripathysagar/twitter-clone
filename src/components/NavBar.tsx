@@ -81,7 +81,7 @@ export default function NavBar(){
                                 </div>
                             </button>
                             { hamburgIconClicked &&
-                            <div className="flex absolute divide-y right-2 z-10 mt-4 w-60 origin-top-right rounded-md bg-sky-500   focus:outline-none " role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+                            <div className="flex absolute divide-y right-2 z-10 mt-4 w-60 origin-top-right rounded-md bg-sky-500   focus:outline-none " role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
                                 <div className="py-1 divide-y" role="none">
                                     
                                     <Button label={"Profile"} width={70} navFunc={myProfile} hamburgIcon={true} />

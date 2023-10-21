@@ -84,7 +84,7 @@ export default function CreateTweet(){
                     <textarea
                         className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary  "
                         id="exampleFormControlTextarea1"
-                        rows="4"
+                        rows={4}
                         placeholder="Your tweet"
                         value={tweet}
                         onChange={(e)=>{
