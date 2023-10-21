@@ -106,7 +106,7 @@ export function extractResult(data: any, selfPage: boolean){
       <div className="w-full">
       {
       profiles.map(profile => 
-        <ProfilePage  profileInput={profile} selfPage={false} forSearchReasult={true}/>
+        <ProfilePage key={profile.id} profileInput={profile} selfPage={false} forSearchReasult={true}/>
         )
       }
       </div>
