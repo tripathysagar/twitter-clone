@@ -2,9 +2,8 @@
 
 import { profileType } from "@/lib/zodTypes";
 import { Button } from "../Button";
-import { ProfileAtom } from "@/recoil/atoms/profileAtoms";
-import { useRecoilState } from "recoil";
 import axios from "axios";
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from "react";
 import { formatTweetDate } from "../addComment/TweetCard";
 
@@ -16,6 +15,8 @@ export function ProfilePage({profileInput, selfPage, forSearchReasult}:{
 }) {
 
     
+
+    const router = useRouter();
 
     
     const [profile, setProfile] = useState(profileInput);
@@ -32,8 +33,8 @@ export function ProfilePage({profileInput, selfPage, forSearchReasult}:{
         //console.log(profile.followingSince instanceof Date)
         //console.log(typeof profile.followingSince  )
 
-        console.log(profile);
-        console.log(forSearchReasult);
+        //console.log(profile);
+        //console.log(forSearchReasult);
 
     },[profile])
     
@@ -70,17 +71,20 @@ export function ProfilePage({profileInput, selfPage, forSearchReasult}:{
     }
     
     return (
-        <div className=" pt-2 flex  bg-red-800 font-sans " >
+        <div className=" pt-2 flex  font-sans pb-2 " >
             
-            <div className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-800  rounded border w-full">
+            <div className="bg-white  bg-sky-500  rounded border w-full">
                 <div className="flex  flex-row ml-2 justify-between  mb-2">
-                    <div className="flex  flex-row ml-2">
+                    <div 
+                    className="flex  flex-row ml-2"
+                    onClick={(e) => router.push(`/profile/${profileInput.id}`)}
+                    >
                         <img className="w-10 h-10 mt-2 rounded-2xl border border-gray-100 dark:border-gray-700 " src={avatarSrc}/>
 
                         <div className="flex items-center  ">
-                            <div className="ml-1.5 text-sm leading-tight bg-red-950">
-                                <span className="text-black dark:text-white font-bold block ">{profile.name}</span>
-                                <span className="text-gray-500 dark:text-gray-400 font-normal block">@{profile.email}</span>
+                            <div className="ml-1.5 text-sm leading-tight ">
+                                <span className="text-black  font-bold block ">{profile.name}</span>
+                                <span className="text-gray-500  font-normal block">@{profile.email}</span>
                             </div>
         
         

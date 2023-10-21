@@ -2,7 +2,7 @@
 import { redirect } from "next/navigation";
 
 import { cookies, headers } from "next/headers";
-import {  userDetails } from '@/lib/zodTypes';
+import {  profileType, userDetails } from '@/lib/zodTypes';
 import BasePage from "@/components/profile/BasePage";
 import { getUserFromJWT } from "@/lib/getUserFromJWT";
 import { extractUserById} from '../../../lib/prismaQuery';
@@ -64,11 +64,40 @@ export default async function Page({ params }: { params: { id: number } }) {
         const tweets = await prisma.tweet.findMany({
           where: {
             authorId: profileData.id
+          },
+          include : {
+            author: {
+                select: {
+                    name: true,
+                    avatar: true,
+                    email: true
+                }
+            },
+            likes: {
+              where: {
+                  authorId: userExists.id, // Fill in the userId to filter likes by a specific user
+              },
+              select: {
+                  id: true
+              }
+            }
           }
         });
-
-
-        const following = await prisma.user.findMany({
+        const flattenedTweets = tweets.map(tweet => ({
+          id: tweet.id,
+          tweet: tweet.tweet,
+          createdAt: tweet.createdAt,
+          avatar: tweet.author.avatar,
+          authorName: tweet.author.name,
+          authorEmail: tweet.author.email,
+          likesCount: tweet.likesCount,
+          commentsCount: tweet.commentsCount,
+          userLiked: tweet.likes[0] === undefined ? false : true
+      }));
+      
+        //console.log("----------------------------------")
+        console.log(flattenedTweets);
+        const followingUsers = await prisma.user.findMany({
           where: {
             followers: {
               some: {
@@ -78,10 +107,47 @@ export default async function Page({ params }: { params: { id: number } }) {
           },
         });
 
-        console.log(following);
+        console.log(followingUsers)
+        console.log("........................................ following")
+
+        const FollowingUserData : profileType[]= []
         
+        console.log(followingUsers);
+        for(let i = 0; i < followingUsers.length; i++ ){
+          const temp =await prisma.followers.findFirst({
+            where: {
+              parentId: followingUsers[i].id,
+              followerId: userExists.id
+            }
+          })
+          FollowingUserData.push({
+            id: followingUsers[i].id,
+            name: followingUsers[i].name,
+            email: followingUsers[i].email,
+            avatar: followingUsers[i].avatar,
+            followingSince: temp?.followingSince,
+            followerCount: followingUsers[i].followerCount
+          })
+          
+        } 
+
+        console.log(FollowingUserData);
+
+        /*
+        const x =  await prisma.user.findMany({
+          where: {
+            followers: {
+              some: {
+                parentId: profileData.id,
+              },
+            },
+          },
+        });
+        console.log("++++++++++++++++++++++++++ x")
+        console.log(x)
+        */
         return (
-           <BasePage profileData={profileData} user={user.data}/> 
+           <BasePage profileData={profileData} user={user.data} tweets={flattenedTweets} following={FollowingUserData} /> 
           );
         
     }}

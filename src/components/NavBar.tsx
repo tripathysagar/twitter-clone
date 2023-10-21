@@ -48,7 +48,7 @@ export default function NavBar(){
     }
 
     return(
-        <nav className='bg-red-800 '>
+        <nav className=' '>
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <Link href="/home" className="flex items-center rounded-sm">
                     <Image src="/logo.png" width={40} height={20} alt="X Logo" className='rounded-sm ' />
@@ -81,12 +81,13 @@ export default function NavBar(){
                                 </div>
                             </button>
                             { hamburgIconClicked &&
-                            <div className="flex absolute right-0 z-10 mt-4 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none " role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
-                                <div className="py-1" role="none">
-                                        
-                                    <Button label={"Sign out"} width={70} navFunc={signOut} hamburgIcon={true} />
-                                    <hr className="h-px  bg-gray-200 border-0 dark:bg-gray-700"></hr>
+                            <div className="flex absolute divide-y right-2 z-10 mt-4 w-60 origin-top-right rounded-md bg-sky-500   focus:outline-none " role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+                                <div className="py-1 divide-y" role="none">
+                                    
                                     <Button label={"Profile"} width={70} navFunc={myProfile} hamburgIcon={true} />
+                                    
+                                    <Button label={"Sign out"} width={70} navFunc={signOut} hamburgIcon={true} />
+                                    
                                     
                                 </div>
                             </div>

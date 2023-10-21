@@ -28,7 +28,7 @@ export default function SearchBar(){
           if(resp.status === 200){
             console.log(resp);
             
-            setSearchResultAtom(extractResult(resp.data));
+            setSearchResultAtom(extractResult(resp.data, false));
           }
         }catch(error:any){
           console.log(error);
@@ -58,7 +58,7 @@ export default function SearchBar(){
               type="button" 
               className="absolute inset-y-0 right-0 bg-gray-700 rounded-md p-2 inline-flex items-center justify-center text-gray-400 "
               onClick={(e)=>{
-                console.log("cross is clicked")
+                //console.log("cross is clicked")
                 setSearchStr('');
                 setSearchButtonClicked(false);
               }}
@@ -73,7 +73,7 @@ export default function SearchBar(){
           </div>
           <button 
           type="submit" 
-          className="p-2.5  text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 "
+          className="p-2.5  text-sm font-medium text-white bg-sky-500 rounded-lg border border-blue-700 "
           onClick={(e)=>{
             if(searchStr !== ''){
               serach();
@@ -96,7 +96,7 @@ export default function SearchBar(){
 
 
 
-function extractResult(data: any){
+export function extractResult(data: any, selfPage: boolean){
 
 
   if(data.queryType === 'profile' && data.result.length > 0){
