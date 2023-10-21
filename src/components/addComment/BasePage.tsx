@@ -46,7 +46,7 @@ export default function BasePage({tweet, comments, user}:{tweet:tweetType, comme
     return (
         
         <main >
-            <div className="bg-emerald-950 ">
+            <div className=" ">
                 
                     {!searchButtonClicked && 
                     <span  className={showSpan}>
@@ -55,7 +55,7 @@ export default function BasePage({tweet, comments, user}:{tweet:tweetType, comme
 
                         </div>
 
-                        <div className='flex flex-col items-center justify-center  bg-red-500 '>
+                        <div className='flex flex-col items-center justify-center  '>
                             <AddCommnet />
                             <ShowTweet />
                         </div>

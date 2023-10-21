@@ -82,7 +82,7 @@ export default function CreateTweet(){
 
                 <div className="relative  bg-slate-700  rounded-sm" data-te-input-wrapper-init>
                     <textarea
-                        className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary  dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary "
+                        className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary  "
                         id="exampleFormControlTextarea1"
                         rows="4"
                         placeholder="Your tweet"

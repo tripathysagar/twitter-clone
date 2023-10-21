@@ -73,13 +73,13 @@ export function ProfilePage({profileInput, selfPage, forSearchReasult}:{
     return (
         <div className=" pt-2 flex  font-sans pb-2 " >
             
-            <div className="bg-white  bg-sky-500  rounded border w-full">
+            <div className="  bg-sky-500  rounded border w-full">
                 <div className="flex  flex-row ml-2 justify-between  mb-2">
                     <div 
                     className="flex  flex-row ml-2"
                     onClick={(e) => router.push(`/profile/${profileInput.id}`)}
                     >
-                        <img className="w-10 h-10 mt-2 rounded-2xl border border-gray-100 dark:border-gray-700 " src={avatarSrc}/>
+                        <img className="w-10 h-10 mt-2 rounded-2xl border border-gray-100  " src={avatarSrc}/>
 
                         <div className="flex items-center  ">
                             <div className="ml-1.5 text-sm leading-tight ">
@@ -93,7 +93,7 @@ export function ProfilePage({profileInput, selfPage, forSearchReasult}:{
                     
                     {
                         !selfPage  &&
-                        <div className="flex bg-green-800">
+                        <div className="flex">
                         {
                             ( profile.followingSince === undefined ||   profile.followingSince === null) &&
                             <Button label={"follow"} width={80} navFunc={addFollow} hamburgIcon={false}/>

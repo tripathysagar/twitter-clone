@@ -42,18 +42,18 @@ export default function TweetCard({tweetInput, clickable}:{tweetInput:tweetType,
     }
     return (
         <Fragment  >
-        <div  className=" pt-2 flex   bg-red-800 font-sans " >
-            <div className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-800  rounded border w-full">
+        <div  className=" pt-2 flex    font-sans " >
+            <div className="bg-white  border-gray-200   rounded border w-full">
                 <div 
                 className="flex  flex-row ml-2 "
                 onClick={(e) => router.push(`/profile/${tweetInput.authorId}`)}
                 >
-                    <img className="w-10 h-10 mt-2 rounded-2xl border border-gray-100 dark:border-gray-700 " src={avatarSrc}/>
+                    <img className="w-10 h-10 mt-2 rounded-2xl border border-gray-100  " src={avatarSrc}/>
 
                     <div className="flex items-center">
                         <div className="ml-1.5 text-sm leading-tight">
-                            <span className="text-black dark:text-white font-bold block ">{tweet.authorName}</span>
-                            <span className="text-gray-500 dark:text-gray-400 font-normal block">@{tweet.authorEmail}</span>
+                            <span className="text-black  font-bold block ">{tweet.authorName}</span>
+                            <span className="text-gray-500  font-normal block">@{tweet.authorEmail}</span>
                         </div>
                     </div>
                 </div>
@@ -62,14 +62,14 @@ export default function TweetCard({tweetInput, clickable}:{tweetInput:tweetType,
                     if(clickable)
                         tweetClicked()
                 }}>
-                    <p className="text-black dark:text-white block  leading-snug mt-3 ml-2">{tweet.tweet}</p>
-                    <p className="text-gray-500 dark:text-gray-400  py-1 my-0.5 ml-2 font-sans">{formatTweetDate(tweet.createdAt.toString())}</p>
+                    <p className="text-black  block  leading-snug mt-3 ml-2">{tweet.tweet}</p>
+                    <p className="text-gray-500   py-1 my-0.5 ml-2 font-sans">{formatTweetDate(tweet.createdAt.toString())}</p>
                     
 
                 </span>
                 
-                <div className="border-gray-200 dark:border-gray-600 border border-b-0 my-1 pl-2">
-                    <div className="text-gray-500 dark:text-gray-400 flex ">
+                <div className="border-gray-200  border border-b-0 my-1 pl-2">
+                    <div className="text-gray-500  flex ">
                         <div className="flex items-center mr-6">
                             {tweet.userLiked &&  
                             <svg  

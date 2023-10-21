@@ -36,7 +36,7 @@ export async function POST(req: Request) {
         email: email
       }
     })
-    console.log(userExists);
+    //console.log(userExists);
     // userExists !== null; raise error and 400 status
     if(userExists  ){
       console.log(`user name is taken: ${email}`);
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
 
     }
     
-    console.log(name, email, password, avatar)
+    //console.log(name, email, password, avatar)
 
     // encode password or raise error
     const passwordEncrypted = (encodePassword(password));
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
       throw new Error("Server Error, We are checking!!!");
     }
 
-    console.log(passwordEncrypted);
+    //console.log(passwordEncrypted);
     // create entry in db
     const user = await prisma.user.create({
       data: {

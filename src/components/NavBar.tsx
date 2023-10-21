@@ -54,7 +54,7 @@ export default function NavBar(){
                     <Image src="/logo.png" width={40} height={20} alt="X Logo" className='rounded-sm ' />
                 </Link>
 
-                <span className='w-9/12 sm:w-10/12 md:w-1/2 gap-2  bg-green-800'>   
+                <span className='w-9/12 sm:w-10/12 md:w-1/2 gap-2'>   
                     <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                     
                         

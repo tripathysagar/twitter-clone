@@ -69,7 +69,7 @@ export default function AddCommnet(){
 
     return (
 
-        <div className=" gap-2 flex flex-col w-full sm:w-10/12 md:w-1/2 m-3 rounded-2xl bg-green-800">
+        <div className=" gap-2 flex flex-col w-full sm:w-10/12 md:w-1/2 m-3 rounded-2xl ">
             
             <div className="  ">
                 <label htmlFor="large-input" 
@@ -79,7 +79,7 @@ export default function AddCommnet(){
 
                 <div className="relative  bg-slate-700  rounded-sm" data-te-input-wrapper-init>
                     <textarea
-                        className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary  dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary "
+                        className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary  "
                         id="exampleFormControlTextarea1"
                         rows="4"
                         placeholder="Add your commnent"
@@ -99,7 +99,7 @@ export default function AddCommnet(){
                         {128-comment.length}/128
                     </h1>}
 
-                    <Button label={"Add"} width={80} navFunc={postComment} />
+                    <Button label={"Add"} width={80} navFunc={postComment} hamburgIcon={false} />
                     
                 </div>
             </div>

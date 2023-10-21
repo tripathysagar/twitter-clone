@@ -5,10 +5,7 @@ import { cookies } from "next/headers";
 import {  userDetails } from '@/lib/zodTypes';
 import BasePage from "@/components/home/BasePage";
 import { getUserFromJWT } from "@/lib/getUserFromJWT";
-import NavBar from "@/components/home/NavBar";
 import { redirect } from "next/navigation";
-import { UserAtom } from '@/recoil/atoms/userAtoms';
-import { fetchTweets } from "@/lib/fetchTweets";
 
 
 export default async function HomePage(){

@@ -117,7 +117,7 @@ export function extractResult(data: any, selfPage: boolean){
     // set atom data tweet data
     const tweets:tweetType[] = data.result;
     return (
-      <div className="w-full bg-green-300">
+      <div className="w-full ">
       {
       tweets.map(tweet => 
         <TweetCard key={tweet.id} tweetInput={tweet} clickable={true} />)

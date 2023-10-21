@@ -36,7 +36,7 @@ export function Button({label, width, navFunc, hamburgIcon}:{label:string, width
         <button
         onClick={navFunc} 
         type="button" 
-        className=" text-white bg-[#1da1f2] focus:outline-none   font-medium rounded-full text-sm px-5  text-center mr-2  ">
+        className=" text-white bg-gray-400 focus:outline-none   font-medium rounded-full text-sm px-5  text-center mr-2  ">
             {label}
         
       </button>

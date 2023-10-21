@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   let status = 200;
   try {
     const body = await req.json();
-    console.log(body);
+    //console.log(body);
     const {  email, password} = body as {
       email: string;
       password: string;

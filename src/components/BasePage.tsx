@@ -40,19 +40,19 @@ export default function BasePage(){
       
               
       
-              <Button label="Create Account" width={96} navFunc={Signup} />
+              <Button label="Create Account" width={96} navFunc={Signup} hamburgIcon={false}/>
               
       
               <div className="inline-flex items-center justify-center w-full">
-                <hr className="w-64 h-px my-12 bg-gray-200 border-0 dark:bg-gray-700" />
-                <span className="absolute  px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/4 dark:text-white dark:bg-gray-900"></span>
+                <hr className="w-64 h-px my-12 bg-gray-200 border-0" />
+                <span className="absolute  px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/4 "></span>
               </div>
       
               <div className="text-base">
                 <span>Already have an account?</span>
               </div>
               
-              <Button label="Sign In" width={96}  navFunc={Signin} />
+              <Button label="Sign In" width={96}  navFunc={Signin} hamburgIcon={false}/>
               
       
               </div>
