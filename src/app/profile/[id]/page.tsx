@@ -17,9 +17,6 @@ export default async function Page({ params }: { params: { id: number } }) {
   
   const cookieStore = cookies();
 
-  console.log("********************")
-  console.log(typeof profileId);
-  console.log("********************")
   
 
   
@@ -48,7 +45,7 @@ export default async function Page({ params }: { params: { id: number } }) {
             followerId: userExists.id
           }
         })
-        console.log(parentFollower);
+        //console.log(parentFollower);
 
 
 
@@ -98,7 +95,7 @@ export default async function Page({ params }: { params: { id: number } }) {
       }));
       
         //console.log("----------------------------------")
-        console.log(flattenedTweets);
+        //console.log(flattenedTweets);
         const followingUsers = await prisma.user.findMany({
           where: {
             followers: {
@@ -109,12 +106,12 @@ export default async function Page({ params }: { params: { id: number } }) {
           },
         });
 
-        console.log(followingUsers)
-        console.log("........................................ following")
+        //console.log(followingUsers)
+        //console.log("........................................ following")
 
         const FollowingUserData : profileType[]= []
         
-        console.log(followingUsers);
+        //console.log(followingUsers);
         for(let i = 0; i < followingUsers.length; i++ ){
           const temp =await prisma.followers.findFirst({
             where: {
@@ -133,7 +130,7 @@ export default async function Page({ params }: { params: { id: number } }) {
           
         } 
 
-        console.log(FollowingUserData);
+        //console.log(FollowingUserData);
 
         /*
         const x =  await prisma.user.findMany({

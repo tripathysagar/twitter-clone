@@ -28,13 +28,13 @@ export default function AddCommnet(){
                 const resp = await axios.post('/api/comments', body);
                 setComment(''); 
 
-                console.log("+++++++++++++++++")
-                console.log(`user : ${user?.name}`)
+                //console.log("+++++++++++++++++")
+                //console.log(`user : ${user?.name}`)
 
                 if(user !== undefined)
                 if (resp.status === 200) {
-                    console.log("++++++++++++");
-                    console.log(resp);
+                    //console.log("++++++++++++");
+                    //console.log(resp);
                     setTweet({
                         ...tweet,
                         commentsCount: tweet.commentsCount + 1

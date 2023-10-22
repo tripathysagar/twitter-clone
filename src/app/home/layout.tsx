@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 
 import NavBar from '@/components/NavBar';
+import Result from '@/components/search/Result';
 
 
 
@@ -16,7 +17,7 @@ export default async function RootLayout({
   const cookieStore = cookies();
 
   const cookie = cookieStore.get('t-cookie');
-  console.log(`isnide of layout ${cookie?.value}`);
+  //console.log(`isnide of layout ${cookie?.value}`);
 
   if(cookie !== undefined ) {
 
@@ -24,6 +25,9 @@ export default async function RootLayout({
           
             <div className="sticky top-0 z-50"> 
                 <NavBar />
+                  <div className="relative flex flex-col items-center justify-center m-3">
+                    <Result />
+                  </div>
                 {children}
             </div>
             

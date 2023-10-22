@@ -16,7 +16,7 @@ export default async function HomePage(){
   if(cookie !== undefined ){
     const userExists = await getUserFromJWT(cookie.value);
 
-    console.log(`userExists inside of layout : ${userExists}`);
+    //console.log(`userExists inside of layout : ${userExists}`);
 
     if(userExists === null || userExists === -1){
       //deleteCookie(); did not work 

@@ -26,7 +26,7 @@ export default function SearchBar(){
           });
 
           if(resp.status === 200){
-            console.log(resp);
+            //console.log(resp);
             
             setSearchResultAtom(extractResult(resp.data, false));
           }

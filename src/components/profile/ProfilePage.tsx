@@ -62,7 +62,7 @@ export function ProfilePage({profileInput, selfPage, forSearchReasult}:{
                 
             }
 
-            console.log(profile);
+            //console.log(profile);
         }catch(error:any){
             console.log('Error response data:\n', error.response.data.message);
             alert(error.response.data.message);

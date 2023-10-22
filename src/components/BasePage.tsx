@@ -8,12 +8,12 @@ export default function BasePage(){
     //const session = useSession();
 
     const  Signup =  () => {
-        console.log("Signup clicked!");
+        //console.log("Signup clicked!");
         router.replace("/signup",  { scroll: true });
       };
       
     const  Signin =  () => {
-        console.log("Signin clicked!");
+        //console.log("Signin clicked!");
         router.push("/signin");
         //return signIn();
     };

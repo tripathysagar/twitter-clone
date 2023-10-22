@@ -27,13 +27,13 @@ export default function CreateTweet(){
                 const resp = await axios.post('/api/tweet', body);
                 setTweet(''); 
 
-                console.log("+++++++++++++++++")
-                console.log(`user : ${user?.name}`)
+                //console.log("+++++++++++++++++")
+                //console.log(`user : ${user?.name}`)
 
                 if(user !== undefined)
                 if (resp.status === 200) {
-                    console.log("++++++++++++");
-                    console.log(resp);
+                    //console.log("++++++++++++");
+                    //console.log(resp);
                     const now = new Date();
                     const utcTimestamp = now.toISOString();
                     const userTweeet : tweetType ={
@@ -49,14 +49,14 @@ export default function CreateTweet(){
                         authorId: user.id
                     }
 
-                    console.log(`userTweeet value is : ${userTweeet}`);
-                    console.log(`tweets before updating: ${tweets}`);
+                    //console.log(`userTweeet value is : ${userTweeet}`);
+                    //console.log(`tweets before updating: ${tweets}`);
 
                     
                     setTweets((prevTweets) => [
                         userTweeet,...prevTweets,
                     ]);
-                    console.log(`after updated ${typeof tweets[0].createdAt}`);
+                    //console.log(`after updated ${typeof tweets[0].createdAt}`);
 
                 } else {
                     throw new Error(resp.data.message);

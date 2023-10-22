@@ -46,7 +46,7 @@ export default function BasePage({profileData, user, tweets, following}:{
         setHamburgIconClicked(false);
         setSearchButtonClicked(false);
 
-        console.log(following);
+        //console.log(following);
         //console.log(tweets);
         //console.log(following);
 

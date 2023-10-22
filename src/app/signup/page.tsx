@@ -31,8 +31,8 @@ export default  function Signup() {
             src={src} 
             alt={avatar} 
             onClick={(e)=>{
-                console.log(src);
-                console.log(i);
+                //console.log(src);
+                //console.log(i);
                 setLogo(i);
             }}
             />
@@ -55,21 +55,21 @@ export default  function Signup() {
             return;
         }
 
-        console.log(body)
+        //console.log(body)
         try {
           
           const resp = await axios.post('/api/signup', body);
       
           if (resp.status === 200) {
-            console.log(resp);
+            //console.log(resp);
             router.replace('/home');
           } else {
             throw new Error(resp.data.message);
           }
         } catch (error:any) {
           if (error.response) {
-            console.log('Error status:', error.response.status);
-            console.log('Error response data:\n', error.response.data.message);
+            //console.log('Error status:', error.response.status);
+            //console.log('Error response data:\n', error.response.data.message);
             alert(error.response.data.message);
           } else {
             console.error('Request failed:', error.message);

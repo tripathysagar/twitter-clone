@@ -18,7 +18,7 @@ export default async function Page() {
 
     // given jwt token is invalid either expired or invalid
     if(userId === -1){ 
-      console.log("invalid cookie");
+      //console.log("invalid cookie");
       // TODO remove cookie
     }else{
 
@@ -28,7 +28,7 @@ export default async function Page() {
           id: userId
         }
       })
-      console.log(`userExists for the id ${userId} : ${userExists}`);
+      //console.log(`userExists for the id ${userId} : ${userExists}`);
       
       if(!userExists){
         // the user is not present in the DB

@@ -11,6 +11,9 @@ export default function Result(){
     const searchResult = useRecoilValue(SearchResultAtom);
     const setSearchStr = useSetRecoilState(QueryAtom);
 
+    
+
+
     return (
         <div className="w-full sm:w-10/12 md:w-1/2 gap-2 ">
         {searchButtonClicked && 
