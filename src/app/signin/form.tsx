@@ -66,7 +66,7 @@ export function Form(){
               <div className=" text-white  rounded-lg border shadow-lg p-5 box-content h-1/3 w-full md:w-1/2 lg:w-1/3 m-2 ">
                   <div >
                       <div className="">
-                          <label htmlFor="Email Address" className="block mb-2  text-gray-900 text-white">First name</label>
+                          <label htmlFor="Email Address" className="block mb-2  text-gray-900 text-white">Email</label>
                           <input 
                           type="text" 
                           id="email" 
